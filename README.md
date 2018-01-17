@@ -1,18 +1,32 @@
 # DouraSoft
 
-Área de desafios com o objetivo de encontrar novos talentos que gostariam de fazer parte do nosso time.
+Desafio Programador PHP - DouraSoft
 
-## Desafio Desenvolvedor Back-End
-https://github.com/paulop/dourasoft/tree/php-dev-challenge
+Desenvolvimento de um CRUD de cadastro de produtos em PHP e PostgreSQL
 
-## Desafio Desenvolvedor Front-End
-https://github.com/paulop/dourasoft/tree/front-end-challenge
+## Deverá conter
+Produtos: ID, Codigo, Nome, Descrição e Preço
 
-## Desafio Desenvolvedor Wordpress
-https://github.com/paulop/dourasoft/tree/wp-dev-challenge
+Clientes: ID, Nome, Telefone, Endereço
 
-## Desafio Estágio Front-End
-https://github.com/paulop/dourasoft/tree/trainee-front-challenge
+Pedidos: ID, Cliente, Total, Data, Produtos
+
+## Instruções
+
+1. Faça um fork do projeto para sua conta pessoal
+2. Crie uma branch com o padrão: `desafio-seu-nome`
+3. Coloque seu teste dentro do diretório **[/dev-php-challenge/seu-nome](https://github.com/paulop/dourasoft/)** 
+4. Utilize o seu nome para a pasta principal do projeto
+5. Submeta seu código criando um Pull Request
+
+## Você pode
+
+- Utilizar qualquer Framework. Caso opte por não utilizar, desenvolver nos padrões de projeto MVC
+- Utilizar composer
+- Utilizar qualquer template engine de sua preferência
+- Utilizar quaisquer bibliotecas ou frameworks JS como Angular, React, jQuery, VueJS ou outras
+- Utilizar bibliotecas CSS como Compass, Bourbon, Animatecss ou outras
+- Utilizar quaisquer frameworks CSS como Bootstrap, Foundation ou outras
 
 ## Dúvidas?
 

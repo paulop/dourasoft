@@ -15,7 +15,7 @@ Pedidos: ID, Cliente, Total, Data, Produtos
 
 1. Faça um fork do projeto para sua conta pessoal
 2. Crie uma branch com o padrão: `desafio-seu-nome`
-3. Coloque seu teste dentro do diretório **[/dev-php-challenge/seu-nome](https://github.com/paulop/dourasoft/)** 
+3. Coloque seu teste dentro do diretório `/desafio-php/seu-nome`
 4. Utilize o seu nome para a pasta principal do projeto
 5. Submeta seu código criando um Pull Request
 

@@ -17,14 +17,14 @@ Desenvolvimento de um CRUD de cadastro de produtos em PHP e **PostgreSQL**
 2. Crie uma branch com o padrão: `desafio-seu-nome`
 3. Submeta seu código criando um Pull Request
 
-## Você pode:exclamation:
+## Você pode
 
 - Utilizar qualquer Framework PHP. Caso opte por não utilizar, desenvolver nos padrões de projeto MVC
 - Utilizar composer
 - Utilizar quaisquer bibliotecas ou frameworks Javascript como VueJS, React, jQuery ou outras
 - Utilizar quaisquer frameworks CSS como Bootstrap, Materialize ou outras
 
-## Não esqueça de :eyes:
+## Não esqueça de
 
 - Manter o script sql junto da sua aplicação
 - Criar um manual de como instalar seu sistema

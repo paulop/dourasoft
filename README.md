@@ -2,14 +2,14 @@
 
 Desafio Programador PHP - DouraSoft
 
-Desenvolvimento de um CRUD de cadastro de produtos em PHP e PostgreSQL
+Desenvolvimento de um CRUD de cadastro de produtos em PHP e **PostgreSQL**
 
 ## Deverá conter
-Produtos: ID, Codigo, Nome, Descrição e Preço
+**Produtos**: ID, Codigo, Nome, Descrição e Preço
 
-Clientes: ID, Nome, Telefone, Endereço
+**Clientes**: ID, Nome, Telefone, Endereço
 
-Pedidos: ID, Cliente, Total, Data, Produtos
+**Pedidos**: ID, Cliente, Total, Data, Produtos
 
 ## Instruções
 
@@ -17,16 +17,22 @@ Pedidos: ID, Cliente, Total, Data, Produtos
 2. Crie uma branch com o padrão: `desafio-seu-nome`
 3. Submeta seu código criando um Pull Request
 
-## Você pode
+## Você pode:exclamation:
 
-- Utilizar qualquer Framework. Caso opte por não utilizar, desenvolver nos padrões de projeto MVC
+- Utilizar qualquer Framework PHP. Caso opte por não utilizar, desenvolver nos padrões de projeto MVC
 - Utilizar composer
-- Utilizar qualquer template engine de sua preferência
-- Utilizar quaisquer bibliotecas ou frameworks JS como VueJS, React, jQuery ou outras
+- Utilizar quaisquer bibliotecas ou frameworks Javascript como VueJS, React, jQuery ou outras
 - Utilizar quaisquer frameworks CSS como Bootstrap, Materialize ou outras
 
-## Dúvidas?
+## Não esqueça de :eyes:
+
+- Manter o script sql junto da sua aplicação
+- Criar um manual de como instalar seu sistema
+
+## Dúvidas:question:
 
 Abra uma [issue](https://github.com/paulop/dourasoft/issues/new)
 
-Boa sorte! :)
+Ou envie um email para: **paulo@dourasoft.com.br**
+
+Boa sorte! :muscle:

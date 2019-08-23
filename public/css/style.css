@@ -1,0 +1,174 @@
+*{
+	padding:0;
+	margin: 0;
+	font-family: 'arial';
+}
+:root{
+	--header:#DBA901;
+	--white:#ffffff;
+  --black:#000000;
+}
+header{
+  align-items:center;
+  display:flex;
+  flex-direction:column;
+  padding:10px 10px;
+  justify-content: space-around;
+	box-shadow: 1px 1px 1px 1px  #dedede;
+	background:var(--header);
+}
+header nav ul{
+  display:flex;
+}
+header nav ul li{
+  list-style:none;
+  margin-left:20px;
+}
+header nav ul li a{
+  color:var(--white);
+  text-decoration:none;
+}
+header .logo{
+	display:flex;
+	align-items:center;
+}
+header .logo h1,
+header .logo h2{
+	font-size: 1rem;
+	font-weight:inherit;
+	color:var(--white);
+}
+header .logo h2{
+	font-size:.8rem;
+}
+.container{
+	width:90%;
+	margin: auto;
+}
+.box-container{
+  margin-top:1rem;
+  background:var(--white);
+  box-shadow:  1px 1px 1px 1px #ededed;
+}
+
+.box-container{
+  padding:15px 15px;
+}
+
+.input-container{
+  display: flex;
+  flex-direction: column;
+}
+
+.input-container input,select{
+  border:1px solid #dedede;
+  padding: 0.6rem;
+  margin-bottom: 0.5rem;
+  border-radius:3px;
+}
+
+.flex-1{
+  flex: 1;
+}
+
+.flex-2{
+  flex: 2;
+}
+
+.flex-3{
+  flex: 3;
+}
+
+.flex-4{
+  flex: 4;
+}
+
+.flex-9{
+  flex: 10;
+}
+.title {
+  padding:10px 10px;
+  border-left:  3px solid var(--header);
+}
+.title h1{
+  font-weight:inherit;
+  font-size:.8rem;
+}
+.form-cliente{
+  margin-top: 1rem;
+}
+input[type="submit"]{
+  background:var(--header);
+  color:var(--white);
+  box-shadow: 1px 1px 1px 1px #ededed;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+th{
+  color:var(--header);
+}
+th, td {
+  font-size:.8rem;
+  padding: 8px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+tr a{
+  text-decoration:none;
+  border:1px solid var(--header);
+  color:var(--balck);
+  padding:5px 20px;
+  margin-left:10px;
+}
+tr a:hover{
+  background:var(--header);
+  color:var(--white);
+}
+.danger p,
+.sucess p{
+  margin-bottom:1rem;
+  padding:10px 10px;
+  color:var(--white);
+  margin-bottom:12px;
+}
+.sucess p{
+  background:var(--header);
+}
+.danger p{
+  background:#FE2E2E;
+}
+.select{
+  margin-right:1rem;
+}
+.table{
+  overflow-x:auto;
+}
+@media screen and (min-width: 600px){
+  .input-container{
+    align-items: center;
+    flex-direction: row;
+  }
+  header{
+    flex-direction:row;
+    padding:inherit;
+  }
+  .input-container input{
+    margin-right: 1rem;
+  }
+
+  .input-container input:last-of-type{
+    margin-right: 0;
+  }
+  .container{
+    width:1020px;
+    margin: auto;
+  }
+  .title h1{
+      font-size:1.2rem;
+  }
+  th, td {
+    font-size:1rem;
+  }
+}

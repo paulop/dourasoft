@@ -17,29 +17,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
    <main class="container">
       <section class="box-container">
          <div class="title">
-            <h1>Solicitar pedidos</h1>
+            <h1>Aletrar solicitação pedido</h1>
          </div>
          <div class="form-cliente">
-            <form action="<?=base_url('pedido/solicitar')?>" method="post">
+            <form action="<?=base_url("pedido/editar/salvar/{$produtos_pedido[0]->id_pedido}")?>" method="post">
                <div class="input-container">
                   <select class="flex-3 select" name="id_cliente">
-                     <option value=''>Selecionar cliente</option>
+                     <option value='<?=$produtos_pedido[0]->id_cliente ?>'>Cliente atual:<?=$produtos_pedido[0]->nome_cliente ?> </option>
                      <?php foreach ($clientes as $cliente):?>
-                        <option value="<?=$cliente->id_cliente?>"><?=$cliente->nome_cliente ?></option>
+                        <option selected value="<?=$cliente->id_cliente?>"><?=$cliente->nome_cliente ?></option>
                      <?php endforeach; ?>
                   </select>
-                  <input class="flex-3" type="date" name="data_pedido" placeholder="Nome do cliente completo">
+                  <input class="flex-3" type="date" name="data_pedido" value='<?=$produtos_pedido[0]->data_pedido ?>'>
                </div>
                <di class='input-container'>
                    <select class="flex-3" name="pedidos[]" multiple>
                      <option value=''>Selecionar cliente</option>
-                     <?php foreach ($produtos as $produto):?>
-                        <option value="<?=$produto->id_produto ?>">Produto:<?=$produto->nome_produto ?> - preço: <?=$produto->preco ?></option>
+                     <?php foreach ($produtos_pedido as $produto):?>
+                        <option selected value="<?=$produto->id_produto ?>">Produto solicitado :<?=$produto->nome_produto ?> - preço: <?=$produto->preco ?></option>
+                     <?php endforeach; ?>
+                      <?php foreach ($produtos as $produto):?>
+                        <option  value="<?=$produto->id_produto ?>"><?=$produto->nome_produto ?> - preço: <?=$produto->preco ?></option>
                      <?php endforeach; ?>
                   </select>
                </div>
                <div class="input-container">
-                  <input class="flex-1" type="submit" value="Solicitar pedido">
+                  <input class="flex-1" type="submit" value="Alterar pedido">
                </div>
             </form>
             <div>
@@ -50,33 +53,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <div class="sucess"><p><?=$this->session->flashdata('messagem') ?></p></div>
                <?php endif;  ?>
             </div>
-         </div>
-      </section>
-       <section class="box-container">
-         <div class="title">
-            <h1>Pedidos</h1>
-         </div>
-         <div class="clientes table">
-            <table>
-               <thead>
-                  <tr>
-                     <th>Data pedido</th>
-                     <th>Cliente</th>
-                     <th>Valor total</th>
-                  </tr>
-               </thead>
-               <tbody>
-                  <?php foreach ($pedidos as $pedido): ?>
-                     <tr>
-                        <td><?=$pedido->nome_cliente ?></td>
-                        <td>R$:<?=$pedido->total_pedido  ?></td>
-                        <td><?=formatdata($pedido->data_pedido)?></td>
-                          <td><a href="<?=base_url("pedido/editar/{$pedido->id_pedido}") ?>">Editar </a></td>
-                        <td><a href="<?=base_url("pedido/excluir/{$pedido->id_pedido}") ?>">Excluir </a></td>
-                     </tr>
-                  <?php endforeach; ?>
-               </tbody>
-            </table>
          </div>
       </section>
    </main>

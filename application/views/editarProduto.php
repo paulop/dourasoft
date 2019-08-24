@@ -42,7 +42,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </section>
    </main>
 </body>
- <script type="text/javascript">
-      $('#preco').mask('0,00');
- </script>
 </html>

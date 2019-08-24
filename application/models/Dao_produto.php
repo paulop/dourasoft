@@ -21,6 +21,7 @@ class Dao_produto extends CI_Model{
 	public function excluirProduto($id)
 	{
 		return $this->db->delete('produtos',array('id_produto' =>$id));
+		
 	}
 	public function alterarProduto($id,$campos)
 	{

@@ -40,9 +40,14 @@ class Cliente extends CI_Controller {
 	}
 	public function deletarCliente($id)
 	{
-		$this->Dao_cliente->excluirCliente($id);
-		$this->session->set_flashdata('messagem','Cliente deletado com sucesso.');
-		redirect('/');
+		if(verificar_foreign($id,'pedidos','id_cliente') > 0){
+			$this->session->set_flashdata('messagem','Não é possivel deletar cliente.');
+			redirect('/');
+		}else{
+			$this->Dao_cliente->excluirCliente($id);
+			$this->session->set_flashdata('messagem','Cliente deletado com sucesso.');
+			redirect('/');
+		}
 	}
 	public function editarClienteSalvar($id){
 		$this->form_validation->set_rules('nome_cliente','Nome do cliente','required');

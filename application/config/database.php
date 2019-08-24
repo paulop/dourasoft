@@ -12,7 +12,7 @@ $db['default'] = array(
 	'database' => 'sistema_pedido_cliente',
 	'dbdriver' => 'postgre',
 	'dbprefix' => '',
-	'pconnect' => FALSE,
+	'pconnect' => TRUE,
 	'db_debug' => (ENVIRONMENT !== 'production'),
 	'cache_on' => FALSE,
 	'cachedir' => '',

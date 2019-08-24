@@ -1,4 +1,5 @@
  <header>
+   <div class='header container'>
    	<div class="logo">
    		<div>
    			<img src="https://img.icons8.com/cotton/64/000000/online-order.png">
@@ -15,4 +16,5 @@
             <li><a href="<?=base_url('/pedidos')?>">Pedidos</a></li>
          </ul>
       </nav>
+   </div>
 </header>

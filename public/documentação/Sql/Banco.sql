@@ -36,3 +36,23 @@ FOREIGN KEY(id_pedido) REFERENCES pedidos (id_pedido) ON DELETE CASCADE,
 FOREIGN KEY(id_produto) REFERENCES produtos (id_produto)
 );
 
+
+CREATE OR REPLACE FUNCTION  total_pedido_calc()  RETURNS trigger AS $total_pedido_calc$
+
+DECLARE preco_produto real DEFAULT 0;  
+
+BEGIN
+    select preco from produtos where id_produto = NEW.id_produto INTO preco_produto;
+    UPDATE pedidos SET total_pedido = (preco_produto + total_pedido)  where id_pedido = NEW.id_pedido;  
+    RETURN NEW;
+END
+$total_pedido_calc$ LANGUAGE plpgsql;
+
+CREATE TRIGGER total_pedido_calc
+  after INSERT 	
+  ON pedido_produto
+  FOR EACH ROW
+  EXECUTE PROCEDURE total_pedido_calc();
+
+
+

@@ -7,7 +7,7 @@ $autoload['packages'] = array();
 
 $autoload['libraries'] = array('database','session','form_validation','pagination');
 
-$autoload['helper'] = array('url','form','date');
+$autoload['helper'] = array('url','form','date','verificar_foreign_helper');
 
 $autoload['drivers'] = array();
 

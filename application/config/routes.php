@@ -30,7 +30,11 @@ $route['produto/excluir/(:any)'] = 'produto/deletarProduto/$1';
 $route['pedidos'] = 'pedido';
 $route['pedido/solicitar'] = 'pedido/solicitarPedido';
 $route['pedido/excluir/(:any)'] = 'pedido/deletarPedido/$1';
+$route['pedido/editar/(:any)'] = 'pedido/editarPedido/$1';
+$route['pedido/editar/salvar/(:any)'] = 'pedido/salvarPedido/$1';
 
+
+//fim
 
 
 $route['404_override'] = '';

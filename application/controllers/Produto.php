@@ -41,9 +41,15 @@ class Produto extends CI_Controller {
 	}
 	public function deletarProduto($id)
 	{
-		$this->Dao_produto->excluirProduto($id);
-		$this->session->set_flashdata('messagem','Produto deletado com sucesso.');
-		redirect('/produtos');
+		if(verificar_foreign($id,'pedido_produto','id_produto') > 0){
+			$this->session->set_flashdata('messagem','Não é possivel deletar produto');
+			redirect('/produtos');
+		}else{
+			$deletarProduto = $this->Dao_produto->excluirProduto($id);
+			$this->session->set_flashdata('messagem','Produto deletado com sucesso.');
+			redirect('/produtos');
+		}
+		
 	}
 	public function editarProdutoSalvar($id){
 		$this->form_validation->set_rules('codigo_produto','Código do produto','required');

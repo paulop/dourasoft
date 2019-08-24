@@ -63,7 +63,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <td><?=$produto->codigo_produto ?></td>
                         <td><?=$produto->nome_produto ?></td>
                         <td><?=$produto->descricao_produto ?></td>
-                        <td><?=$produto->preco ?></td>
+                        <td>R$: <?=$produto->preco ?></td>
                         <td><a href="<?=base_url("produto/excluir/{$produto->id_produto}") ?>">Excluir </a></td>
                         <td><a href="<?=base_url("produto/alterar/{$produto->id_produto}") ?>">Alterar</a></td>
                      </tr>
@@ -75,7 +75,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
    </main>
 </body>
 <script type="text/javascript">
-      $('#preco').mask('00,000');
       $('#codigo_produto').mask('#101010');
  </script>
 </html>

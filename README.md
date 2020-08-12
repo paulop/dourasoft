@@ -1,8 +1,8 @@
 # DouraSoft
 
-Desafio Programador PHP - DouraSoft
+Desafio Programador Web - DouraSoft
 
-Desenvolvimento de um CRUD de cadastro de produtos em PHP e **PostgreSQL**
+Desenvolvimento de um CRUD de cadastro de produtos em PHP ou Javascript e **PostgreSQL**
 
 ## Deverá conter
 **Produtos**: ID, Codigo, Nome, Descrição e Preço

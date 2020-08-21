@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css?family=Inter&display=swap');
+
+.header{
+    border-radius: 5px;
+    margin-left: 10%;
+    width: 80%;
+    height: 15vh;
+    background: rgba(200, 214, 229,0.8);
+}
+
+.header h2{
+    margin-top: 0;
+    padding-top: 10px;
+    margin-left: 5%;
+    color: #636e72;
+    font-family: 'Inter', sans-serif;
+}
+
+.header nav ul{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    list-style: none;
+    margin-right: 10%;
+    margin-bottom: 5%;
+}
+
+header .header  nav li{
+    margin: 0 30px;
+}
+
+header .header  nav li{
+    text-decoration: none;
+    color: #32325D;
+}
+
+header .header  nav li:hover{
+    color: #636e72;
+
+}

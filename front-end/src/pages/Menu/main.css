@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css?family=Inter&display=swap');
+body{
+    background: #dfe6e9;
+    height: 100vh;
+    width: 100%;
+}
+
+.content {
+    height: 100vh;
+    position: relative;
+}
+
+.Titulo{
+    position: absolute;
+    top: 10vh;
+    left: 30vw;
+}
+
+.Titulo h1{
+    margin-bottom: 10%;
+}
+
+
+.content h2{
+    margin-left: 10%;
+    color: rgba(34, 47, 62,1.0);
+}
+
+.link{
+    position: absolute;
+    top: 65vh;
+    left: 35vw;
+}
+
+.link ul{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    list-style: none;
+    margin-right: 10%;
+    margin-bottom: 5%;  
+}
+
+
+.link li{
+    text-decoration: none;
+    color: #32325D;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #32325D;
+    margin: 0 40px;
+}
+
+.link li:hover{
+    color: #636e72;
+    border: 1px solid #636e72;
+}

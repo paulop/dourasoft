@@ -1,4 +1,4 @@
-import React, { useState } from  'react';
+import React, { useState, useEffect } from  'react';
 import './main.css';
 import MaskedInput from 'react-text-mask';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
@@ -15,6 +15,15 @@ const Modal = ({ id = 'modal', onClose = () => {}, children }) => {
     const [ codigo, setCodigo ] = useState('');
     const [ descricao, setDescricao ] = useState('');
     const [ preco, setPreco ] = useState('');
+
+    useEffect(() => {
+        const id = localStorage.getItem('IdProduto');
+        api.get(`/produto/${id}`).then( response => {
+            setCodigo(response.data.codigo);
+            setDescricao(response.data.descricao);
+            setPreco(response.data.preco);
+        });
+    });
 
     async function EditarCliente(e){
         e.preventDefault();

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './main.css';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
@@ -7,22 +8,13 @@ import EditIcon from '@material-ui/icons/Edit';
 
 import Header from '../../components/header';
 import ModalPedidos from '../../components/adcionarPedidos';
-import Cliente from '../../components/adcionarCliente';
 import api from '../../services/api';
 
 
 function Pedido() {
-    const [ visivel, setVisivel] = useState(false);
     const [ modalVisivel, setModalVisivel] = useState(false);
     const [ pedidos, setPedidos ] = useState([]);
     const [ idPedido, setIdPedido ] = useState(''); 
-
-
-    function cliente(e){
-        e.preventDefault();
-
-        setVisivel(true);
-    }
 
     async function editar(id){
         localStorage.setItem('IdPedido', id);
@@ -56,11 +48,9 @@ function Pedido() {
             <div className="table">
                 <header>Pedidos realizados 
 
-                <button className="button" onClick={cliente} ><AddCircleOutlineIcon className="CircleBtn"></AddCircleOutlineIcon>Cadastrar um novo Cliente</button>
-                {visivel ? 
-                    (<Cliente onClose={ () => setVisivel(false)}
-                        info={idPedido}>
-                    </Cliente>) : null} 
+                <Link style={{ textDecoration: 'none' }} to={'/clientes'}>
+                <button className="button" ><AddCircleOutlineIcon className="CircleBtn"></AddCircleOutlineIcon>Cadastrar um novo Cliente</button> 
+                </Link>
                 </header>
                 
             <table className="table-box">

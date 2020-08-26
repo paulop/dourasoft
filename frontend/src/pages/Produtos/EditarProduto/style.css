@@ -1,0 +1,7 @@
+.editarProduto {
+    border: 2px solid #000;
+}
+
+.editarProduto h3, form {
+    margin: 10px;
+}

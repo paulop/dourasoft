@@ -1,0 +1,11 @@
+.addProduto {
+    border: 2px solid #000;
+}
+
+.addProduto h3, form {
+    margin: 10px;
+}
+
+.addProduto {
+    margin-bottom: 5px;
+}

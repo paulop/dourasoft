@@ -1,0 +1,7 @@
+.editarCliente {
+    border: 2px solid #000;
+}
+
+.editarCliente h3, form {
+    margin: 10px;
+}

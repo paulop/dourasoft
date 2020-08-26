@@ -1,0 +1,147 @@
+CREATE DATABASE api
+
+
+-- TABELAS
+
+CREATE TABLE clientes (
+	id SERIAL PRIMARY KEY,
+	nome VARCHAR(64),
+	telefone CHAR(11),
+	endereco VARCHAR(128),
+	created_at TIMESTAMP WITHOUT TIME ZONE,
+	updated_at TIMESTAMP WITHOUT TIME ZONE
+);
+
+CREATE TABLE produtos(
+	id SERIAL PRIMARY KEY,
+	codigo INTEGER NOT NULL,
+	nome VARCHAR(68) NOT NULL UNIQUE,
+	descricao TEXT  NOT NULL,
+	preco REAL NOT NULL,
+	created_at TIMESTAMP WITHOUT TIME ZONE,
+	updated_at TIMESTAMP WITHOUT TIME ZONE
+);
+
+CREATE TABLE pedidos (
+	id SERIAL PRIMARY KEY,
+	id_cliente INTEGER NOT NULL,
+	data_pedido DATE,
+	status VARCHAR(9),
+	total_pedido REAL,
+	FOREIGN KEY(id_cliente) REFERENCES clientes(id) ON DELETE CASCADE,
+	created_at TIMESTAMP WITHOUT TIME ZONE,
+	updated_at TIMESTAMP WITHOUT TIME ZONE
+);
+
+
+CREATE TABLE lista_itens (
+	id SERIAL PRIMARY KEY,
+	id_pedido INTEGER NOT NULL,
+	id_produto INTEGER NOT NULL,
+	quantidade_produto INTEGER NOT NULL,
+	valor_produto REAL NOT NULL,
+	total_lista REAL NOT NULL,
+	FOREIGN KEY(id_pedido) REFERENCES pedidos(id) ON DELETE CASCADE,
+	FOREIGN KEY(id_produto) REFERENCES produtos(id),
+	created_at TIMESTAMP WITHOUT TIME ZONE,
+	updated_at TIMESTAMP WITHOUT TIME ZONE
+);	
+
+
+-- INSERTs
+
+INSERT INTO clientes (nome, telefone, endereco) VALUES ('Giacomo', '67996520786', 'Rua Dourados MS')
+INSERT INTO clientes (nome, telefone, endereco) VALUES ('Pedro', '67996520785', 'Rua Esquina MS')
+INSERT INTO clientes (nome, telefone, endereco) VALUES ('Lucas', '67996520787', 'Rua Matos MS')
+INSERT INTO clientes (nome, telefone, endereco) VALUES ('Amanda', '67996520788', 'Rua Pereira MS')
+INSERT INTO clientes (nome, telefone, endereco) VALUES ('Fernanda', '67996520789', 'Rua Osvaldo MS')
+
+INSERT INTO produtos (codigo, nome, descricao, preco) VALUES (1000', 'Banana', 'Fruta', 5)
+INSERT INTO produtos (codigo, nome, descricao, preco) VALUES (1001', 'Pera', 'Fruta', 10.5)
+INSERT INTO produtos (codigo, nome, descricao, preco) VALUES (1002', 'Couve', 'Vegetal', 7)
+INSERT INTO produtos (codigo, nome, descricao, preco) VALUES (1003', 'Celular', 'Eletronico', 2)
+INSERT INTO produtos (codigo, nome, descricao, preco) VALUES (1004', 'TV', 'Eletronico', 3)
+
+INSERT INTO pedidos (id_cliente, data_pedido, status, total_pedido) VALUES (1, 2020-08-20, 'Aberto', 10)
+INSERT INTO pedidos (id_cliente, data_pedido, status, total_pedido) VALUES (2, 2020-08-20, 'Entregue', 5)
+INSERT INTO pedidos (id_cliente, data_pedido, status, total_pedido) VALUES (4, 2020-08-20, 'Fechado', 15)
+
+
+INSERT INTO lista_itens (id_pedido, id_produto, quantidade_produto, valor_produto, total_lista) VALUES (1, 2, 3, 5, 31.5)
+INSERT INTO lista_itens (id_pedido, id_produto, quantidade_produto, valor_produto, total_lista) VALUES (1, 1, 4, 5, 20)
+INSERT INTO lista_itens (id_pedido, id_produto, quantidade_produto, valor_produto, total_lista) VALUES (2, 3, 1, 7, 7)
+
+
+-- FUNCTIONS
+
+CREATE OR REPLACE FUNCTION created_at_func()
+RETURNS trigger AS $BODY$
+BEGIN
+	NEW.created_at = now();
+RETURN NEW;
+END;
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION updated_at_func()
+RETURNS trigger AS $BODY$
+BEGIN
+	NEW.updated_at = now();
+RETURN NEW;
+END;
+$BODY$
+LANGUAGE plpgsql;
+
+
+
+-- TRIGGERS
+
+
+CREATE TRIGGER cliente_criado
+	BEFORE INSERT
+	ON clientes
+	FOR EACH ROW 
+	EXECUTE PROCEDURE created_at_func()
+
+CREATE TRIGGER cliente_editado
+	BEFORE UPDATE
+	ON clientes
+	FOR EACH ROW 
+	EXECUTE PROCEDURE updated_at_func()
+
+CREATE TRIGGER produto_criado
+	BEFORE INSERT
+	ON produtos
+	FOR EACH ROW
+	EXECUTE PROCEDURE created_at_func()
+
+CREATE TRIGGER produto_editado
+	BEFORE UPDATE
+	ON produtos
+	FOR EACH ROW
+	EXECUTE PROCEDURE updated_at_func()
+
+CREATE TRIGGER pedido_criado
+	BEFORE INSERT
+	ON pedidos
+	FOR EACH ROW 
+	EXECUTE PROCEDURE created_at_func()
+
+CREATE TRIGGER pedido_editado
+	BEFORE UPDATE
+	ON pedidos
+	FOR EACH ROW
+	EXECUTE PROCEDURE updated_at_func()
+
+CREATE TRIGGER lista_itens_criado
+	BEFORE INSERT
+	ON lista_itens
+	FOR EACH ROW
+	EXECUTE PROCEDURE created_at_func()
+
+CREATE TRIGGER lista_itens_editado
+	BEFORE UPDATE
+	ON lista_itens
+	FOR EACH ROW
+	EXECUTE PROCEDURE updated_at_func()
+

@@ -1,0 +1,13 @@
+.Menu {
+    background-color: #cccccc;
+}
+
+.Menu ul {
+    display: flex;
+}
+
+.Menu ul li {
+    padding: 15px;
+    margin: 10px;
+    list-style: none;
+}

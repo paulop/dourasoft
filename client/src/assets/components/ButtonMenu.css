@@ -1,0 +1,19 @@
+.button-menu{
+    height: 56px;
+    overflow: hidden;
+}
+
+.button-menu a{
+    padding: 17.5px 25px;
+    color: black;
+    text-decoration: none;
+    font-size: large;
+    font-weight: bold;
+    display: inline-block;
+    text-align: center;
+
+}
+
+.button-menu:hover{
+    background-color: whitesmoke;
+}

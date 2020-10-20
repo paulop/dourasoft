@@ -1,0 +1,22 @@
+.card-list{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 20px;
+    flex-wrap: wrap;
+}
+
+.card-list > *{
+    margin: 10px;
+}
+
+.container{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+}
+
+.container-actions{
+    align-self: flex-start;
+}

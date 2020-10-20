@@ -1,0 +1,97 @@
+.order-card {
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-top: 6px solid rgb(97, 205, 187);
+    transition: 0.4s;
+}
+.order-attributes {
+    display: flex;
+    align-self: flex-start;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 10px;
+}
+
+.order-attributes > * {
+    margin: 6px 0;
+}
+
+.order-specifics {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    align-self: flex-start;
+}
+
+.order-specifics > *{
+    margin: 0 8px;
+}
+
+.client-attributes{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.client-attributes> *{
+    margin: 0 8px 8px 8px;
+}
+
+.products-list{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    transition:0.5s;
+    overflow: hidden;
+}
+
+.products-list > *{
+    flex-shrink: 0;
+}
+
+.products-attributes{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: hidden;
+}
+
+.products-attributes> *{
+    margin: 0 8px 8px 8px;
+}
+
+.order-buttons-left{
+    align-self: flex-start;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+    margin: 10px 0 0 10px;
+    transition: 0.5s;
+}
+
+.order-buttons-left > *{
+    flex-shrink: 0;
+}
+
+.order-buttons-right{
+    align-self: flex-start;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+    margin:10px 10px 0 0;
+    transition: 0.5s;
+}
+
+.order-buttons-right > *{
+    flex-shrink: 0;
+}

@@ -1,4 +1,5 @@
 # Desafio DouraSoft
+Criação de um sistema web utilizando react.js com redux no frontend e no backend utilizando express.js com sequelize como ORM para o banco de dados PostgreSQL.
 ## Requisitos
 * Node.js
 * npm
@@ -11,7 +12,7 @@ Acesse o cli do PostgreSQL.
 sudo -u postgres psql
 ```
 #### 1 - Criar Usuário
-Caso já tenha um usuário para acessar o banco de dados, pode pular essa etapa e trocar o nome e senha utilizados no arquivo _**.env**_ na pasta _**server**_. 
+Caso queira utilizar outro usuário para acessar o banco de dados, basta trocar o nome e senha utilizados nos scripts abaixo e no arquivo _**.env**_ na pasta _**server**_. 
 
 Será criado um usuário com nome _**aless**_ e senha _**123**_
 ```
@@ -43,7 +44,7 @@ DATABASE=transportadora
 ~/server$ npm start
 ```
 ## Views
-A aplicação utilizando react já está configurada para ser servida através do servidor iniciado anteriormente. 
+O frontend utilizando react já está configurado para ser servido através do servidor iniciado anteriormente. 
 Ela pode ser acessada em _http://localhost:5000_
 ### Ações Padronizadas
 #### Salvar Registro Criado
@@ -81,6 +82,7 @@ O total mostrado é igual ao valor informado pela API, quando não se carregou a
 Caso a lista de produtos não tenha sido carregada, atualizações não serão realizadas nela.
 
 ## CRUD API
+Os caracteres " _**:id**_ " nas rotas se referem ao _**id**_ do registro que será buscado, deletado ou atualizado. Portanto caso queira deletar o registro de _**id**_ _**1**_, terá que substituir " _**:id**_ " pelo número _**1**_. 
 ### Cliente
 #### Formato na Base de Dados
 |id|nome|endereco|telefone|

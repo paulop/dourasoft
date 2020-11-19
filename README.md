@@ -21,7 +21,6 @@ CREATE DATABASE desafio_dourasoft_alessandro;
 GRANT ALL PRIVILEGES ON DATABASE "desafio_dourasoft_alessandro" to user123;
 ```
 ### Back-end
-#### Instalação
 #### Configurando o Banco de Dados no Servidor
 No arquivo _**.env**_ na pasta _**server/config**_ preencha o campo _**DATABASE_USER**_ com o nome de usuário no banco de dados e o campo _**DATABASE_PASSWORD**_ com a senha desse usuário. No campo _**DATABASE_NAME**_ insira o nome da base de dados criada na etapa anterior.
 ```
@@ -44,6 +43,7 @@ export DATABASE_NAME="desafio_dourasoft_alessandro"
 ~/PATH/TO/PROJECT/server$ bin/cake server
 ```
 ### Front-end
+#### Instalação
 ```
 ~/PATH/TO/PROJECT/client$ npm install
 ```

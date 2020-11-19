@@ -44,7 +44,6 @@ export DATABASE_NAME="desafio_dourasoft_alessandro"
 ~/PATH/TO/PROJECT/server$ bin/cake server
 ```
 ### Front-end
-#### Instalação
 ```
 ~/PATH/TO/PROJECT/client$ npm install
 ```

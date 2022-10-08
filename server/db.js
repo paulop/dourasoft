@@ -1,7 +1,7 @@
 const Pool = require("pg").Pool;
 
-// We could also use Herokus Postgres service for minimum ping
-// since we are deploying to Heroku.
+// We could also use Heroku's Postgres service for minimum ping
+// since we intend on deploying to Heroku.
 // Repository and Credentials are public only for this challenge.
 const pool = new Pool({
     user: "mgjjxcsj",

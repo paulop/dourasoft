@@ -1,3 +1,5 @@
+-- Reference SQL script file
+
 create database dbase;
 
 create table products (

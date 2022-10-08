@@ -87,3 +87,15 @@ app.put("/api/v1/regs/:id", async (req,res) => {
 });
 
 // delete a register
+
+app.delete("/api/v1/regs/:id", async (req,res) => {
+    try {
+        const { id } = req.params;
+        const deleteReg= await pool.query("DELETE FROM products WHERE id = $1", [id]);
+        //console.log(oneReg);
+        res.send("Entry was deleted!");
+    } catch (err) {
+        console.error(err.message)
+    }
+
+});

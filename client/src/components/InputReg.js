@@ -2,33 +2,66 @@ import React, {useState} from 'react';
 
 const InputReg = () => {
 
-    const [description, setDescription] = useState("");
-
+    const [allValues, setAllValues] = useState({
+        cod_prod: "",
+        prod_name:"",
+        description:"",
+        price: ""
+    });
+    const changeHandler = ev => {
+        setAllValues({...allValues, [ev.target.name]: ev.target.value})
+     }
     const onSubmitForm = async (e) => {
         e.preventDefault();
         try {
-            const body = {description};
-            const response = fetch("http://localhost:3000/api/v1/register",{
+            const body = {allValues};
+            const response = fetch("http://localhost:3001/api/v1/register",{
                 method:"POST",
                 headers: {"Content-Type": "application.json"},
                 body: JSON.stringify(body)
             });
+            console.log(response);
         } catch (error) {
             console.log(error.message);
         }
     }
     return (
         <>
-            <h1 className="text-center mt-5">Registers List</h1>
-            <form className="d-flex mt-5">
+            <div class="container m-1">
+            <div className="h2 text-center">Add Product</div>
+            <form className="d-flex" onSubmit={onSubmitForm}>
+                <input 
+                    type="number" 
+                    className="form-control m-2 w-25"
+                    value={allValues.cod_prod}
+                    placeHolder="Code"
+                    onChange={changeHandler}
+                />
                 <input 
                     type="text" 
-                    className="form-control" 
-                    value={description}
-                    onChange={e => setDescription(e.target.value)}
+                    className="form-control m-2 w-75"
+                    value={allValues.name} 
+                    placeHolder="Name"
+                    onChange={changeHandler}
                 />
-                <button className="btn btn-success">Add</button>
+                <input 
+                    type="text" 
+                    className="form-control m-2 w-75"
+                    value={allValues.description}
+                    placeHolder="Description" 
+                    onChange={changeHandler}
+                />
+                <input 
+                    type="number" 
+                    className="form-control m-2 w-25"
+                    value={allValues.price}
+                    placeHolder="Price" 
+                    step=".01"
+                    onChange={changeHandler}
+                />
+                <button className="btn btn-success m-2">Add</button>
             </form>
+            </div>
         </>
     );
 };

@@ -1,12 +1,15 @@
 // criando e ativando o express
 const express = require("express");
 const app = express();
+// cross origin resource sharing
+const cors = require("cors");
 // with this pool, we can run queries with postgres
 const pool = require("./db");
 // definicao de porta
-const PORT = 3000;
+const PORT = 3001;
 
 // middlewares
+app.use(cors());
 app.use(express.json());
 
 // monitorar porta e msg de conexao 

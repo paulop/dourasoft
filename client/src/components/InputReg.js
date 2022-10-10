@@ -27,35 +27,35 @@ const InputReg = () => {
     }
     return (
         <>
-            <div class="container m-1">
+            <div className="container m-1">
             <div className="h2 text-center">Add Product</div>
             <form className="d-flex" onSubmit={onSubmitForm}>
                 <input 
                     type="number" 
                     className="form-control m-2 w-25"
                     value={allValues.cod_prod}
-                    placeHolder="Code"
+                    placeholder="Code"
                     onChange={changeHandler}
                 />
                 <input 
                     type="text" 
                     className="form-control m-2 w-75"
                     value={allValues.name} 
-                    placeHolder="Name"
+                    placeholder="Name"
                     onChange={changeHandler}
                 />
                 <input 
                     type="text" 
                     className="form-control m-2 w-75"
                     value={allValues.description}
-                    placeHolder="Description" 
+                    placeholder="Description" 
                     onChange={changeHandler}
                 />
                 <input 
                     type="number" 
                     className="form-control m-2 w-25"
                     value={allValues.price}
-                    placeHolder="Price" 
+                    placeholder="Price" 
                     step=".01"
                     onChange={changeHandler}
                 />

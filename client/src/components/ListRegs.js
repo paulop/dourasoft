@@ -1,6 +1,22 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 const ListRegs = () => {
+    
+    useEffect ( () => {
+        const fetchData = async () => {
+            try {
+                const options = {method: 'GET', headers: {'Content-Type': 'text/plain'}};
+                const response = fetch('http://localhost:3001/api/v1/regs', options)
+                .then(response => response.json())
+                .then(response => console.log(response.rows))
+            } catch (error) {
+                console.log(error.message)
+            }
+            
+        }
+        
+        fetchData();
+    });
     return (
         <div className="list-group">
             <table className="table table-hover table-dark">

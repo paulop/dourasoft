@@ -29,21 +29,11 @@ app.listen(PORT, () => {
 
 app.post("/api/v1/register", async(req,res) => {
     try {
-        //const {description} = req.body;
-        //const cod_prod = 101;
-        //const prod_name = 'notebook A';
-        //const desc = 'note core i9 3.8ghz 32gb';
-        //const price = 750.00;
-        //const newReg = await pool.query(
-        //    "insert into products (cod_prod, prod_name, description, price) values ($1, $2, $3, $4)", [cod_prod, prod_name, desc, price]
-        //);
-        //res.send("Entry added!");
-
         const {cod_prod, prod_name, description, price} = req.body;
         const newReg = await pool.query(
             "INSERT INTO products (cod_prod, prod_name, description, price) VALUES ($1, $2, $3, $4)", [cod_prod, prod_name, description, price]
         );
-        console.log("Entry added!");
+        res.send("Entry was updated!");
     }
     catch (err) {
         console.error(err.message);
@@ -86,7 +76,7 @@ app.put("/api/v1/regs/:id", async (req,res) => {
         const { id } = req.params;
         const { description } = req.body;
         const oneReg = await pool.query("UPDATE products SET description = $1 WHERE id = $2", [description, id]);
-        //console.log(oneReg);
+        console.log(oneReg);
         res.send("Entry was updated!");
     } catch (err) {
         console.error(err.message)

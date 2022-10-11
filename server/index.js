@@ -27,13 +27,14 @@ app.listen(PORT, () => {
 
 // create register
 
-app.post("/api/v1/register", async(req,res) => {
+app.post("/api/v1/register", async (req,res) => {
     try {
         const {cod_prod, prod_name, description, price} = req.body;
         const newReg = await pool.query(
             "INSERT INTO products (cod_prod, prod_name, description, price) VALUES ($1, $2, $3, $4)", [cod_prod, prod_name, description, price]
         );
-        res.send("Entry was updated!");
+        res.json(newReg);
+        //res.send('Register Added to database')
     }
     catch (err) {
         console.error(err.message);

@@ -2,25 +2,44 @@ import React, {useState} from 'react';
 
 const InputReg = () => {
 
-    const [allValues, setAllValues] = useState({
-        cod_prod: "",
-        prod_name:"",
-        description:"",
-        price: ""
-    });
-    const changeHandler = ev => {
-        setAllValues({...allValues, [ev.target.name]: ev.target.value})
-     }
+    const [cod_prod, setCodProd] = useState("");
+    const [prod_name, setProdName] = useState("");
+    const [description, setDescription] = useState("");
+    const [price, setPrice] = useState("");
+
+    // method onSubmitForm has a POST request
     const onSubmitForm = async (e) => {
         e.preventDefault();
         try {
-            const body = {allValues};
+            //const prodnum = parseint(cod_prod)
+            const body = {cod_prod, prod_name, description, price};
+            console.log(body);
+
+            const options = {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(body)
+              };
+              
+            const response = await fetch('http://localhost:3001/api/v1/register', options)
+            const data = await response;
+            console.log(data);
+                //.then(response => response.json())
+                //.then(response => console.log(response))
+                //.catch(err => console.error(err));
+
+
+            /*
             const response = fetch("http://localhost:3001/api/v1/register",{
                 method:"POST",
                 headers: {"Content-Type": "application.json"},
                 body: JSON.stringify(body)
             });
+            
             console.log(response);
+            */
+
+
         } catch (error) {
             console.log(error.message);
         }
@@ -33,31 +52,31 @@ const InputReg = () => {
                 <input 
                     type="number" 
                     className="form-control m-2 w-25"
-                    value={allValues.cod_prod}
+                    value={cod_prod}
                     placeholder="Code"
-                    onChange={changeHandler}
+                    onChange={e => setCodProd(parseInt(e.target.value))}
                 />
                 <input 
                     type="text" 
                     className="form-control m-2 w-75"
-                    value={allValues.name} 
+                    value={prod_name} 
                     placeholder="Name"
-                    onChange={changeHandler}
+                    onChange={e => setProdName(e.target.value)}
                 />
                 <input 
                     type="text" 
                     className="form-control m-2 w-75"
-                    value={allValues.description}
+                    value={description}
                     placeholder="Description" 
-                    onChange={changeHandler}
+                    onChange={e => setDescription(e.target.value)}
                 />
                 <input 
                     type="number" 
                     className="form-control m-2 w-25"
-                    value={allValues.price}
+                    value={price}
                     placeholder="Price" 
                     step=".01"
-                    onChange={changeHandler}
+                    onChange={e => setPrice(parseFloat(e.target.value))}
                 />
                 <button className="btn btn-success m-2">Add</button>
             </form>

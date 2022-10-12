@@ -9,6 +9,7 @@ const InputReg = () => {
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState("");
 
+
     // method onSubmitForm has a POST request
     const onSubmitForm = async (e) => {
         e.preventDefault();
@@ -20,9 +21,6 @@ const InputReg = () => {
             const response = await Finder.post('/register',body)
             console.log(response.data[0]);
             
-                //.then(response => response.json())
-                //.then(response => console.log(response))
-                //.catch(err => console.error(err));
 
             // Fast solution for table refresh
             window.location.reload();
@@ -31,28 +29,6 @@ const InputReg = () => {
             console.log(error.message);
         }
 
-        /*
-        try {
-            const body = {cod_prod, prod_name, description, price};
-            console.log(body);
-
-            const options = {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(body)
-              };
-              
-            const response = await fetch('http://localhost:3001/api/v1/register', options)
-            const data = response;
-            console.log(data);
-                //.then(response => response.json())
-                //.then(response => console.log(response))
-                //.catch(err => console.error(err));
-
-        } catch (error) {
-            console.log(error.message);
-        }
-        */
     }
     return (
         <>

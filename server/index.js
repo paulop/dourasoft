@@ -78,11 +78,34 @@ app.get("/api/v1/regs/:id", async (req,res) => {
 
 app.put("/api/v1/regs/:id", async (req,res) => {
     try {
+        
         const { id } = req.params;
-        const { description } = req.body;
-        const oneReg = await pool.query("UPDATE products SET description = $1 WHERE id = $2", [description, id]);
+        const { cod_prod, prod_name, description, price } = req.body;
+        console.log(req.body)
+        const oneReg = await pool.query("UPDATE products SET cod_prod=$1, prod_name=$2, description = $3, price=$4 WHERE id = $5", [cod_prod, prod_name, description, price, id]);
         console.log(oneReg);
         res.send("Entry was updated!");
+        
+
+       /*
+        const { id } = req.params;
+        console.log(id)
+        const {cod_prod, prod_name, description, price} = req.body;
+        const renew = await pool.query(
+            "UPDATE products SET cod_prod=$1, prod_name=$2, description=$3, price=$4 WHERE id = $5", [cod_prod, prod_name, description, price, id]
+        );
+        //res.send(req.body);
+        //console.log(renew.rows);
+
+        res.send("Entry was updated!")
+        */
+
+
+
+
+
+
+
     } catch (err) {
         console.error(err.message)
     }

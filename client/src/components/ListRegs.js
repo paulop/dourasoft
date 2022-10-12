@@ -1,7 +1,10 @@
-import React, {useEffect, useState, useContext} from 'react';
+import React, {useEffect, useState} from 'react';
+
+import EditReg from './EditReg';
 
 const ListRegs = () => {
     const [prods, setProds] = useState();
+
     
     // The empty array is used for rendering useEffect only once
     useEffect ( () => {
@@ -57,7 +60,7 @@ const ListRegs = () => {
                                 <td>{prod.prod_name}</td>
                                 <td>{prod.description}</td>
                                 <td>{prod.price}</td>
-                                <td><button className="btn btn-warning">Update</button></td>
+                                <td><EditReg prod={prod}/></td>
                                 <td><button className="btn btn-danger" onClick={() => deleteReg(prod.id)}>Delete</button></td>
 
                             </tr>

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 
 const ListRegs = () => {
     const [prods, setProds] = useState();
@@ -22,14 +22,18 @@ const ListRegs = () => {
         fetchData();
 
     }, []);
-
+    
     const deleteReg = async (id) => {
 
         const options = {method: 'DELETE'};
-        const deleteProd = await fetch(`http://localhost:3001/api/v1/regs/${id}`, options);
+        //console.log(id)
+        const deleteProd = await fetch(`http://localhost:3001/api/v1/regs/${String(id)}`, options);
+        // This should be the easiest way to update react useState, by means of a filter
+        // Filter only those that do not match the deleted element id
+        setProds(prods.filter(prod=>prod.id !== id));
         console.log(deleteProd);
+        
     }
-    deleteReg(); 
 
 
     return (

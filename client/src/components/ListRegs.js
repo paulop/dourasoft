@@ -44,6 +44,7 @@ const ListRegs = () => {
             <table className="table table-hover table-dark">
                 <thead>
                     <tr className="bg-primary">
+                        <th scope="col">Id</th>
                         <th scope="col">Code</th>
                         <th scope="col">Name</th>
                         <th scope="col">Description</th>
@@ -56,6 +57,7 @@ const ListRegs = () => {
                     {prods && prods.map((prod) => {
                         return (
                             <tr key = {prod.id}>
+                                <td>{prod.id}</td>
                                 <td>{prod.cod_prod}</td>
                                 <td>{prod.prod_name}</td>
                                 <td>{prod.description}</td>

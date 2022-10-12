@@ -31,7 +31,7 @@ app.post("/api/v1/register", async (req,res) => {
     try {
         const {cod_prod, prod_name, description, price} = req.body;
         const results = await pool.query(
-            "INSERT INTO products (cod_prod, prod_name, description, price) VALUES ($1, $2, $3, $4) returning *", [cod_prod, prod_name, description, price]
+            "INSERT INTO products (cod_prod, prod_name, description, price) VALUES ($1, $2, $3, $4) returning *", [ cod_prod, prod_name, description, price]
         );
         //res.send(req.body);
         console.log(results.rows);
@@ -78,9 +78,8 @@ app.get("/api/v1/regs/:id", async (req,res) => {
 
 app.put("/api/v1/regs/:id", async (req,res) => {
     try {
-        
-        const { id } = req.params;
-        const { cod_prod, prod_name, description, price } = req.body;
+        const {id} = req.params;
+        const {cod_prod, prod_name, description, price } = req.body;
         console.log(req.body)
         const oneReg = await pool.query("UPDATE products SET cod_prod=$1, prod_name=$2, description = $3, price=$4 WHERE id = $5", [cod_prod, prod_name, description, price, id]);
         console.log(oneReg);

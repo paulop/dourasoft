@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-const EditReg = ({prod}) => {
+const EditProd = ({prod}) => {
 
     const [cod_prod, setCodProd] = useState(prod.cod_prod);
     const [prod_name, setProdName] = useState(prod.prod_name);
@@ -72,4 +72,4 @@ const EditReg = ({prod}) => {
         
 };
 
-export default EditReg;
+export default EditProd;

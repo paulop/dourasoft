@@ -1,8 +1,8 @@
 import React from 'react';
 
-import InputReg from "../components/InputReg"
+import InputReg from "../components/InputProd"
 import NavigateButtons from '../components/NavigateButtons';
-import ListRegs from "../components/ListRegs";
+import ListRegs from "../components/ListProds";
 
 const Products= () => {
     return ( 

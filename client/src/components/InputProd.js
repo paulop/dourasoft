@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 
 import Finder from "../apis/Finder";
 
-const InputReg = () => {
+const InputProd = () => {
 
     const [cod_prod, setCodProd] = useState("");
     const [prod_name, setProdName] = useState("");
@@ -71,4 +71,4 @@ const InputReg = () => {
     );
 };
 
-export default InputReg;
+export default InputProd;

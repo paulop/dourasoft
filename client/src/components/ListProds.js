@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 
-import EditReg from './EditReg';
+import EditProd from './EditProd';
 
-const ListRegs = () => {
+const ListProds = () => {
     const [prods, setProds] = useState();
 
     
@@ -49,7 +49,7 @@ const ListRegs = () => {
                         <th scope="col">Name</th>
                         <th scope="col">Description</th>
                         <th scope="col">Price</th>
-                        <th scope="col">Update</th>
+                        <th scope="col">Edit</th>
                         <th scope="col">Delete</th>
                     </tr>
                 </thead>
@@ -62,7 +62,7 @@ const ListRegs = () => {
                                 <td>{prod.prod_name}</td>
                                 <td>{prod.description}</td>
                                 <td>{prod.price}</td>
-                                <td><EditReg prod={prod}/></td>
+                                <td><EditProd prod={prod}/></td>
                                 <td><button className="btn btn-danger" onClick={() => deleteReg(prod.id)}>Delete</button></td>
 
                             </tr>
@@ -75,4 +75,4 @@ const ListRegs = () => {
     )    
 }
 
-export default ListRegs
+export default ListProds

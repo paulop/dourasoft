@@ -13,7 +13,7 @@ const NavigateButtons = () => {
                 </div>
                 <div className="row justify-content-end">
                     <button onClick={() =>{navigate('/');}} className="btn btn-success m-1">Products</button>
-                    <button onClick={() =>{navigate('/clients');}}  className="btn btn-warning m-1">Clients</button>
+                    <button onClick={() =>{navigate('/customers');}}  className="btn btn-warning m-1">Customers</button>
                     <button onClick={() =>{navigate('/orders');}}  className="btn btn-primary m-1">Orders</button>
                 </div>
             </div>

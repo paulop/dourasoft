@@ -52,6 +52,21 @@ app.post("/api/v1/register", async (req,res) => {
 
     });
 
+// read one specific product register
+
+app.get("/api/v1/regs/spec", async (req,res) => {
+    const {id} = req.params;
+    const {prod_name} = req.body;
+    try {
+        const allRegs = await pool.query("SELECT * FROM products p WHERE p.prod_name=$1",[prod_name]);
+        console.log(allRegs);
+        res.send(allRegs);
+    } catch (err) {
+        console.error(err.message)
+    }
+
+});
+
 
 // update one product register
 
@@ -70,7 +85,7 @@ app.put("/api/v1/regs/:id", async (req,res) => {
 
 });
 
-// delete a register
+// delete a product register
 
 app.delete("/api/v1/regs/:id", async (req,res) => {
     try {
@@ -159,10 +174,10 @@ app.delete("/customers/api/v1/cust/:id", async (req,res) => {
 
 app.post("/orders/api/v1/ord", async (req,res) => {
     try {
-        const {customer_id, date, status, total} = req.body;
+        const {customer_id, date, status} = req.body;
         console.log(req.body)
         const results = await pool.query(
-            "INSERT INTO orders (customer_id, date, status, total) VALUES ($1, $2, $3, $4) returning *", [ customer_id, date, status, total]
+            "INSERT INTO orders (customer_id, date, status) VALUES ($1, $2, $3) returning *", [ customer_id, date, status]
         );
         console.log(results.rows);
         res.send(results.rows)
@@ -186,6 +201,31 @@ app.post("/orders/api/v1/ord", async (req,res) => {
 
     });
 
+// read specific order items (search)
+app.get("/orders/api/v1/ord/:id", async (req,res) => {
+    try {
+        const allRegs = await pool.query("SELECT * FROM orders");
+        //console.log(allRegs);
+        res.send(allRegs);
+    } catch (err) {
+        console.error(err.message)
+    }
+
+});
+
+// read order_detail registers
+
+app.get("/orders/api/v1/ordet/:id", async (req,res) => {
+    try {
+        const {id} = req.params;
+        const allOD = await pool.query("select p.id, p.prod_name, oi.quantity, p.price, (oi.quantity*p.price) as subtotal from order_items oi inner join products p on oi.product_id = p.id WHERE oi.order_id = $1",[id]);
+        console.log(allOD);
+        res.send(allOD)
+    } catch (err) {
+        console.error(err.message)
+    }
+
+});
 
 // update one order register
 
@@ -194,7 +234,7 @@ app.put("/orders/api/v1/ord/:id", async (req,res) => {
         const {id} = req.params;
         const {customer_id, date, status, total} = req.body;
         console.log(req.body)
-        const oneReg = await pool.query("UPDATE orders SET customer_id=$1, date=$2, status = $3, total = $4 WHERE id = $5", [customer_id, date, status, total, id]);
+        const oneReg = await pool.query("UPDATE orders SET customer_id=$1, date=$2, status = $3 WHERE id = $4", [customer_id, date, status, id]);
         console.log(oneReg);
         res.send("Entry was updated!");
 

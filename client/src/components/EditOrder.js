@@ -5,12 +5,12 @@ const EditOrder= ({ord}) => {
     const [customer_id, setCustomerId] = useState(ord.customer_id);
     const [date, setDate] = useState(ord.date);
     const [status, setStatus] = useState(ord.status);
-    const [total, setTotal] = useState(ord.total);
+    //const [total, setTotal] = useState(ord.total);
 
     const setData = async (e) => {
         e.preventDefault();
         try {
-            const body = {customer_id, date, status, total};
+            const body = {customer_id, date, status};
             //console.log(body);
             const options = {
                 method: 'PUT',
@@ -51,10 +51,6 @@ const EditOrder= ({ord}) => {
                     
                     <label style={{color: "black"}}>Status:</label>
                     <input type="text" className="form-control" value={status} onChange={(e)=>setStatus(e.target.value)}/>
-                    
-                    <label style={{color: "black"}}>Total:</label>
-                    <input type="number" className="form-control" value={total} step=".01" onChange={(e)=>setTotal(parseFloat(e.target.value))}/>
-                    
                 </div>
             
                 <div className="modal-footer">

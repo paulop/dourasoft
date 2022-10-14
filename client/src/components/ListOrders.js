@@ -27,6 +27,7 @@ const ListOrders = () => {
 
     }, []);
     
+    
     const deleteReg = async (id) => {
 
         const options = {method: 'DELETE'};
@@ -39,6 +40,14 @@ const ListOrders = () => {
         
     }
 
+    // Date conversion for showing a short version
+    const nDate = (dt) => {
+        let timestamp = Date.parse(dt);
+            let date = new Date(timestamp);
+            let nDate = date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear();
+        return nDate;
+    }
+     
 
     return (
         <div className="list-group">
@@ -61,7 +70,7 @@ const ListOrders = () => {
                             <tr key = {ord.id}>
                                 <td>{ord.id}</td>
                                 <td>{ord.customer_id}</td>
-                                <td>{ord.date}</td>
+                                <td>{nDate(ord.date)}</td>
                                 <td>{ord.status}</td>
                                 <td>{ord.total}</td>
                                 <td><OrderDetail ord={ord}/></td>

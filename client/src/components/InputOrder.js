@@ -4,8 +4,8 @@ const InputOrder= () => {
 
     const [customer_id, setCustomerId] = useState("");
     const [date, setDate] = useState("");
-    const [status, setStatus] = useState("");
-    const [total, setTotal] = useState("");
+    const [status, setStatus] = useState("Aberto");
+    const [total, setTotal] = useState(0.00);
 
 
     // method onSubmitForm has a POST request
@@ -13,7 +13,7 @@ const InputOrder= () => {
         e.preventDefault();
 
         try {
-            const body = {customer_id, date, status, total};
+            const body = {customer_id, date, status};
               
             const options = {
                 method: 'POST',
@@ -36,34 +36,20 @@ const InputOrder= () => {
         <>
             <div className="container m-1">
                 <div className="h2 text-center">Add Order</div>
-                    <form className="d-flex" onSubmit={onSubmitForm}>
+                    <form className="d-flex justify-content-center" onSubmit={onSubmitForm}>
                         <input 
                             type="number" 
-                            className="form-control m-2 w-75"
+                            className="form-control m-2 w-25"
                             value={customer_id}
                             placeholder="Customer Id"
                             onChange={e => setCustomerId(e.target.value)}
                         />
                         <input 
                             type="text" 
-                            className="form-control m-2 w-75"
+                            className="form-control m-2 w-25"
                             value={date}
                             placeholder="Date (YYYY-MM-DD)" 
                             onChange={e => setDate(e.target.value)}
-                        />
-                        <input 
-                            type="text" 
-                            className="form-control m-2 w-75"
-                            value={status}
-                            placeholder="Status"
-                            onChange={e => setStatus(e.target.value)}
-                        />
-                        <input 
-                            type="number" 
-                            className="form-control m-2 w-75"
-                            value={total}
-                            placeholder="Total"
-                            onChange={e => setTotal(e.target.value)}
                         />
                         <button className="btn btn-success m-2">Add</button>
                     </form>

@@ -174,10 +174,10 @@ app.delete("/customers/api/v1/cust/:id", async (req,res) => {
 
 app.post("/orders/api/v1/ord", async (req,res) => {
     try {
-        const {customer_id, date, status} = req.body;
+        const {customer_id, date} = req.body;
         console.log(req.body)
         const results = await pool.query(
-            "INSERT INTO orders (customer_id, date, status) VALUES ($1, $2, $3) returning *", [ customer_id, date, status]
+            "INSERT INTO orders (customer_id, date, status) VALUES ($1, $2, $3) returning *", [ customer_id, date, "Aberto"]
         );
         console.log(results.rows);
         res.send(results.rows)

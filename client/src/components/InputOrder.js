@@ -4,8 +4,6 @@ const InputOrder= () => {
 
     const [customer_id, setCustomerId] = useState("");
     const [date, setDate] = useState("");
-    const [status, setStatus] = useState("Aberto");
-    const [total, setTotal] = useState(0.00);
 
 
     // method onSubmitForm has a POST request
@@ -13,7 +11,7 @@ const InputOrder= () => {
         e.preventDefault();
 
         try {
-            const body = {customer_id, date, status};
+            const body = {customer_id, date};
               
             const options = {
                 method: 'POST',

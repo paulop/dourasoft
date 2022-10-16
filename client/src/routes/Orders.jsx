@@ -3,6 +3,7 @@ import React from 'react';
 import InputOrder from "../components/InputOrder"
 import NavigateButtons from '../components/NavigateButtons';
 import ListOrders from "../components/ListOrders";
+import ClientSearch from "../components/ClientSearch";
 
 const Products= () => {
     return ( 
@@ -18,11 +19,25 @@ const Products= () => {
                     </div>
                 </div>
             </div>
+
             
+                    
+            <div class="row">
             
-            <div className="container">
-                <InputOrder/>
+                    
+                <div class="col-5">
+                <div className="container w-150 ml-1 mt-3">
+                        <ClientSearch/>
+                    </div>
+                </div>
+                <div class="col-6">
+                <div className="container w-100">
+                        <InputOrder/>
+                    </div>
+                </div>
             </div>
+            
+            
             <div className="container">
                 <ListOrders/>
             </div>

@@ -32,19 +32,19 @@ const InputOrder= () => {
     }
     return (
         <>
-            <div className="container m-1">
+            <div className="container">
                 <div className="h2 text-center">Add Order</div>
-                    <form className="d-flex justify-content-center" onSubmit={onSubmitForm}>
+                    <form className="d-flex justify-content-left" onSubmit={onSubmitForm}>
                         <input 
                             type="number" 
-                            className="form-control m-2 w-25"
+                            className="form-control m-2 w-50"
                             value={customer_id}
                             placeholder="Customer Id"
                             onChange={e => setCustomerId(e.target.value)}
                         />
                         <input 
                             type="text" 
-                            className="form-control m-2 w-25"
+                            className="form-control m-2 w-55"
                             value={date}
                             placeholder="Date (YYYY-MM-DD)" 
                             onChange={e => setDate(e.target.value)}

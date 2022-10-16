@@ -44,7 +44,8 @@ const ListOrders = () => {
     const nDate = (dt) => {
         let timestamp = Date.parse(dt);
             let date = new Date(timestamp);
-            let nDate = date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear();
+            //let nDate = date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear();
+            let nDate = date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate();
         return nDate;
     }
      
@@ -72,11 +73,10 @@ const ListOrders = () => {
                                 <td>{ord.customer_id}</td>
                                 <td>{nDate(ord.date)}</td>
                                 <td>{ord.status}</td>
-                                <td>{ord.total}</td>
+                                <td>{ord.total}</td>                                
                                 <td><OrderDetail ord={ord}/></td>
                                 <td><EditOrder ord={ord}/></td>
                                 <td><button className="btn btn-danger" onClick={() => deleteReg(ord.id)}>Delete</button></td>
-
                             </tr>
                         );
                     })}

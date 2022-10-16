@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 
 const EditOrder= ({ord}) => {
 
+    
+
     const [customer_id, setCustomerId] = useState(ord.customer_id);
     const [date, setDate] = useState(ord.date);
     const [status, setStatus] = useState(ord.status);
@@ -27,6 +29,15 @@ const EditOrder= ({ord}) => {
 
     }
 
+    // Date conversion for showing a short version
+    const nDate = (dt) => {
+        let timestamp = Date.parse(dt);
+            let date = new Date(timestamp);
+            //let nDate = date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear();
+            let nDate = date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate();
+        return nDate;
+    }
+
     return (
         <>
             <button type="button" className="btn btn-warning" data-toggle="modal" data-target={`#id${ord.id}`}>
@@ -47,7 +58,7 @@ const EditOrder= ({ord}) => {
                     <input type="number" className="form-control" value={customer_id} onChange={(e)=>setCustomerId(parseInt(e.target.value))}/>
                     
                     <label style={{color: "black"}}>Date:</label>
-                    <input type="text" className="form-control" value={date} onChange={(e)=>setDate(e.target.value)}/>
+                    <input type="text" className="form-control" value={nDate(date)} onChange={(e)=>setDate(e.target.value)}/>
                     
                     <label style={{color: "black"}}>Status:</label>
                     <input type="text" className="form-control" value={status} onChange={(e)=>setStatus(e.target.value)}/>

@@ -5,9 +5,9 @@ import OrderDetail from './OrderDetail';
 
 const ListOrders = () => {
     const [orders, setOrders] = useState();
-
-    
+   
     // The empty array is used for rendering useEffect only once
+    
     useEffect ( () => {
         const fetchData =  async () => {
             try {
@@ -26,6 +26,24 @@ const ListOrders = () => {
         fetchData();
 
     }, []);
+
+    const FP =  async () => {
+        const fetchData =  async () => {
+            try {
+                    async function fetchProds() {
+                        const response = await fetch('http://localhost:3001/orders/api/v1/ord/');
+                        const data = await response.json();
+                        await setOrders(data.rows);
+                        //console.log(data.rows);
+                    }
+                    fetchProds();
+
+            } catch (error) {
+                console.log(error.message)
+            }
+        }
+        fetchData();
+    };
     
     
     const deleteReg = async (id) => {
@@ -74,7 +92,7 @@ const ListOrders = () => {
                                 <td>{nDate(ord.date)}</td>
                                 <td>{ord.status}</td>
                                 <td>{ord.total}</td>                                
-                                <td><OrderDetail ord={ord}/></td>
+                                <td><OrderDetail ord={ord} fp={FP}/></td>
                                 <td><EditOrder ord={ord}/></td>
                                 <td><button className="btn btn-danger" onClick={() => deleteReg(ord.id)}>Delete</button></td>
                             </tr>

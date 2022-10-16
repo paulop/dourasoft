@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-const OrderDetail= ({ord}) => {
+const OrderDetail= ({ord}, {FP}) => {
 
     const [search, setSearch] = useState();
     const [tempName, setTempName] = useState("");
@@ -9,7 +9,6 @@ const OrderDetail= ({ord}) => {
 
     const [product_id, setProdId] = useState("");
     const [order_id, setOrderId] = useState(ord.id);
-
 
     // Show Order items from specific order number
     const showOid = async () => {
@@ -20,16 +19,13 @@ const OrderDetail= ({ord}) => {
                     const response = await fetch(`http://localhost:3001/orders/api/v1/ordet/${String(ord.id)}`);
                     const data = await response.json();
                     await console.log("Retrieving data from server");
-                    await setSearch(data.rows);
-                    //console.log(ord.id);
-                    //console.log(search);
-                     
+                    await setSearch(data.rows);    
                 }
                 fetchOid();
             } catch (error) {     
             }
         }
-        //setSearch((ord).filter(ord=>ord.id == id));
+
         setData();
     }
 
@@ -64,7 +60,6 @@ const OrderDetail= ({ord}) => {
             } catch (error) {     
             }
         }
-        //setSearch((ord).filter(ord=>ord.id == id));
         setData();
     }
 
@@ -100,17 +95,24 @@ const OrderDetail= ({ord}) => {
             }
             const response = await fetch(`http://localhost:3001/orders/api/v1/ordet/`, options)
 
-            
 
-            await alert('Order details Updated!');
             
             // Fast solution for table refresh
-            window.location.reload();
+            // window.location.reload();
 
         } catch (error) {
             console.log(error.message);
         }
-        
+        try {
+            async function fetchOid() {
+                const response = await fetch(`http://localhost:3001/orders/api/v1/ordet/${String(ord.id)}`);
+                const data = await response.json();
+                await console.log("Retrieving data from server");
+                await setSearch(data.rows);    
+            }
+            fetchOid();
+        } catch (error) {     
+        }
     }
 
     const SchResult = () => {
@@ -142,6 +144,7 @@ const OrderDetail= ({ord}) => {
         // This should be the easiest way to update react useState, by means of a filter
         // Filter only those that do not match the deleted element id
         setSearch(search.filter(sch=>sch.id !== id));
+        
         console.log(result);
         
     }
@@ -149,7 +152,13 @@ const OrderDetail= ({ord}) => {
     // whe we have more than one Modal element, it is needed to set target and id as random strings
     var rand1 = String(Math.floor(Math.random() * 1000000));
     var rand2 = String(Math.floor(Math.random() * 1000000));
+    var acc = 0;
 
+    const timedReload = () => {
+        setTimeout(() => {
+            window.location.reload();
+          }, "200")
+    };
 
     return (
         <>
@@ -165,8 +174,8 @@ const OrderDetail= ({ord}) => {
                     
 
                         <div className="modal-header">
-                        <h4 className="modal-title">Order Items</h4>
-                        <button type="button" className="close" data-dismiss="modal">&times;</button>
+                        <h4 className="modal-title">Order {'#'+ord.id} Items</h4>
+                        <button type="button" className="close" data-dismiss="modal" onClick={() => timedReload()}>&times;</button>
                         </div>
                         
 
@@ -182,17 +191,27 @@ const OrderDetail= ({ord}) => {
                                 </tr>
                                 </thead>
                                 <tbody>                
-                                    {search && search.map((sch) => {
-                                            return (                                                                                       
+                                    {search && search.map((sch) => {                                      
+                                            acc = acc + parseFloat(sch.subtotal);
+                                            console.log(acc)
+                                            return (                                                                                                                                 
                                                 <tr key = {sch.id}>
                                                     <td>{sch.prod_name}</td>
                                                     <td>{sch.quantity}</td>
                                                     <td>{sch.price}</td>
                                                     <td>{sch.subtotal}</td>
                                                     <td><button type="button" className="close mr-5" aria-label="Close" onClick={() => deleteReg(sch.id)}><span aria-hidden="true">&times;</span></button></td>
+                                                {console.log(sch.subtotal)}
                                                 </tr>                
                                             );
-                                    })}                               
+                                    })}
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td><kbd>TOTAL</kbd></td>
+                                        <td><kbd>{parseFloat(acc).toFixed(2)}{/*total*/}</kbd></td>
+                                        <td></td>
+                                    </tr>                               
                             </tbody>
                             </table>
                         </div>
@@ -200,8 +219,6 @@ const OrderDetail= ({ord}) => {
                         <div className="modal-body">
                             <h5 className="modal-title">Insert/Modify Product Quantity</h5>
                             <div className="input-group col-md-4 m-1">
-                                        {/*React brings a small problem quen handling onchange input events, for useState API repeats for every letter typed
-                                           the best solution so far is to insert a timer */}
                                         <input className="form-control py-2 border-right-0 border" onChange={e=>setTempName(e.target.value)} type="search" placeholder="search" id={"example-search-input"+rand2}/>
                                         <span className="input-group-append">
                                             <button className="btn btn-outline-secondary border-left-0 border" type="button" onClick={() =>findItem()}>
@@ -224,8 +241,8 @@ const OrderDetail= ({ord}) => {
                         
                         <div className="modal-footer">
                             <div className="container">
-                                <button type="button" className="btn btn-success m-1 mr-2" data-dismiss="modal" onClick={ () => changeDetail()}>Insert New</button>
-                                <button type="button" className="btn btn-secondary m-1" data-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-success m-1 mr-2" onClick={ () => changeDetail()}>Insert New</button>
+                                <button type="button" className="btn btn-secondary m-1" data-dismiss="modal" onClick={() => timedReload()}>Close</button>
                             </div>
                         
                         </div>

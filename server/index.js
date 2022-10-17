@@ -1,4 +1,6 @@
 // criando e ativando o express
+require('dotenv').config()
+
 const express = require("express");
 const app = express();
 // cross origin resource sharing
@@ -6,7 +8,7 @@ const cors = require("cors");
 // with this pool, we can run queries with postgres
 const pool = require("./db");
 // definicao de porta
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 // middlewares
 app.use(cors());
@@ -52,14 +54,14 @@ app.post("/api/v1/register", async (req,res) => {
 
     });
 
-// read one specific product register *DETAIL: for now i needed to use PUT, since GET doesn't allow BODY
+// read one specific product register *DETAIL: for now i needed to use POST,  since GET doesn't allow BODY
 
 app.post("/api/v1/regs/spec", async (req,res) => {
     const {id} = req.params;
     const {prod_name} = req.body;
     try {
         //const oneRegs = await pool.query('SELECT * FROM products p WHERE p.prod_name =$1',[prod_name]);
-        const oneRegs = await pool.query(`SELECT * FROM products p WHERE p.prod_name LIKE '%${prod_name}%'`);
+        const oneRegs = await pool.query(`SELECT * FROM products p WHERE p.prod_name ILIKE '%${prod_name}%'`);
         //res.send(allRegs);
         console.log(oneRegs.rows);
         res.send(oneRegs.rows)
@@ -134,6 +136,23 @@ app.post("/customers/api/v1/cust", async (req,res) => {
         }
 
     });
+
+
+// read one specific customer register *DETAIL: for now i needed to use POST, since GET doesn't allow BODY
+
+app.post("/customers/api/v1/cust/spec", async (req,res) => {
+    const {id} = req.params;
+    const {customer_name} = req.body;
+    try {
+        const oneRegs = await pool.query(`SELECT * FROM customers WHERE customer_name ILIKE '%${customer_name}%'`);
+        //res.send(allRegs);
+        console.log(oneRegs.rows);
+        res.send(oneRegs.rows)
+    } catch (err) {
+        console.error(err.message)
+    }
+
+});
 
 
 // update one customer register

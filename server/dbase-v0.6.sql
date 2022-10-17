@@ -26,6 +26,6 @@ create table orders (
 );
 
 
-insert into orders(customer_id, date, status) values (12, '2022-5-9', 'Aberto');
-insert into orders(customer_id, date, status) values (13, '2022-8-17', 'Aberto');
-insert into orders(customer_id, date, status) values (14, '2022-9-23', 'Aberto');
+insert into orders(customer_id, date, status) values (1, '2022-5-9', 'Aberto');
+insert into orders(customer_id, date, status) values (3, '2022-8-17', 'Aberto');
+insert into orders(customer_id, date, status) values (4, '2022-9-23', 'Aberto');

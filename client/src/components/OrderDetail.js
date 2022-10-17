@@ -37,7 +37,7 @@ const OrderDetail= ({ord}, {FP}) => {
                     const body = {"prod_name": tempName};
                     //console.log(body)
                 
-                // Fow now it was needed to use a PUT request, since GET does not allow to send a body
+                // Fow now it was needed to use a POST request, since GET does not allow to send a body
                 const options = {
                     method: 'POST',
                     headers: {"Content-Type":"application/json"},
@@ -63,25 +63,9 @@ const OrderDetail= ({ord}, {FP}) => {
         setData();
     }
 
-    /*
-    const SetAlert = () => {
-        return(
-            <div class="container">
-            <h2>Alerts</h2>
-            <p>The button with class="close" and data-dismiss="alert" is used to close the alert box.</p>
-            <p>The alert-dismissible class adds some extra padding to the close button.</p>
-            <div class="alert alert-success alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>Success!</strong> This alert box could indicate a successful or positive action.
-            </div>
-        );
-    };
-    */
-
     // Tratamento quando se clica o botao "Confirm" do modal de detalhe de pedido
     const changeDetail = async () => {
-
-        
+  
         try {
             //const body = {order_id, "product_id":product_id, "quantity":unit};
 
@@ -95,8 +79,6 @@ const OrderDetail= ({ord}, {FP}) => {
             }
             const response = await fetch(`http://localhost:3001/orders/api/v1/ordet/`, options)
 
-
-            
             // Fast solution for table refresh
             // window.location.reload();
 
@@ -119,15 +101,13 @@ const OrderDetail= ({ord}, {FP}) => {
         return (
             <>
             {prod_name && prod_name.map((pro) => {
-                return (
-                    <tbody>                                                                                      
+                return(                                                                                                      
                     <tr key = {pro.id}>
                         <td>{pro.prod_name}</td>
                         <td><input type="number" className="fs-5 w-25" value={quantity} placeholder="Qty" onChange={e => setQuantity(parseInt(e.target.value))}/></td>
                         <td>{pro.price}</td>
                         <td>{quantity*pro.price}</td>
-                    </tr>
-                    </tbody>                 
+                    </tr>                
                 );
             })} 
             </>      
@@ -235,7 +215,9 @@ const OrderDetail= ({ord}, {FP}) => {
                                     <th>Subtotal</th>
                                 </tr>
                                 </thead>
-                                <SchResult/>                                         
+                                <tbody>
+                                    <SchResult/>                                         
+                                </tbody>
                             </table>
                         </div>
                         

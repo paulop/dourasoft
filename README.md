@@ -36,7 +36,7 @@ Arquivos dbase-v0.5.sql, dbase-v0.6.sql e dbase-v0.7.sql na pasta "Server"
     
 5 - Instalar dependencias a partir da pasta server:
 
-	user@host:~/dourasoft npm install express, pg, cors
+	user@host:~/dourasoft npm install express, .env, pg, cors
 
 
 6 - Instalar dependencias pasta client:

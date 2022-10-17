@@ -15,12 +15,16 @@ Banco de Dados: ElephantSQL (Posgres) em nuvem
 
 ## Scripts SQL do PostgreSQL:
 
-Arquivos dbase-v0.5.sql, dbase-v0.6.sql e dbase-v0.7.sql na pasta "Server"
+	Arquivos na pasta "Server": 	
+		
+		dbase-v0.5.sql 
+		dbase-v0.6.sql
+		dbase-v0.7.sql 
 
 
-## Manual de instalação e inicialização para Ubuntu 22.04:
+## Manual de instalação e inicialização para Ubuntu 22.04 lts:
 
-1 - Realizar update do Ubuntu:
+1 - Realizar update do Ubuntu 22.04
 
     sudo apt update
 
@@ -32,28 +36,44 @@ Arquivos dbase-v0.5.sql, dbase-v0.6.sql e dbase-v0.7.sql na pasta "Server"
 
     user@host:~$ sudo apt install npm
 
-4 - Clonar o repositório do github em uma pasta (exemplo: "user@host:~/dourasoft"):
-    
-5 - Instalar dependencias a partir da pasta server:
+4 - Clonar o repositório do github em uma pasta (exemplo: "user@host:~$"):
 
-	user@host:~/dourasoft npm install express, .env, pg, cors
+	user@host:~$ git clone "endereco_http"
+    
+5 - Entrar na pasta server e Instalar dependencias:
+
+	user@host:~/dourasoft$ cd server
+	user@host:~/dourasoft/server$ npm install
 
 
 6 - Instalar dependencias pasta client:
 
-	user@host:~/dourasoft npm install axios, react-router-dom, jquery  
+	user@host:~/dourasoft$ cd client
+	user@host:~/dourasoft/client$ npm install express, .env, pg, cors 
 
-7 - Inicializar o server em um terminal (pode-se usar o vscode com 02 terminais em modo split): 
+7 - Banco de dados: foram utilizados no desenvolvimento banco de dados em servidor local e também banco de dados em nuvem. Por praticidade, o banco de dados configurado atualmente está implementado externamente na nuvem (PostgreSQL - ElephantSQL):
 
-	user@host:~/dourasoft$ nodemon
+	As credenciais de acesso ao ElephantSQL estão em um arquivo .env enviado no email paulo@dourasoft.com.br .  
 
-8 - Inicializar o client em outro terminal (pode-se usar o vscode com 02 terminais em modo split)
-	
-9 - Abrir a pasta client via vscode ou pelo terminal comum, inicializar o client:
+	Este arquivo .env deve ser inserido dentro da pasta "server" neste momento.
 
-	npm start
+8 - Em caso de se manter em uso do Banco de Dados em nuvem, pular este passo. Caso desejar utilizar banco Postgres local, deve-se:
 
-10 - Foi criado video explicativo sobre a operação do sistema web, posso enviá-lo se necessário. Optei por não hospedar na nuvem para não expor informações sem autorização.
+### a - instalar o PosgreSQL seguindo o roteiro deste link [link](https://www.postgresql.org/download/linux/ubuntu/)
+
+### b - instalar o pgAdmin4 mostrado no roteiro deste [link](https://www.pgadmin.org/download/pgadmin-4-apt/) 
+
+
+9 - Inicializar o server em um terminal a partir da **pasta server** (recomendado vscode com 02 terminais em modo split): 
+
+	user@host:~/dourasoft/server$ nodemon
+
+10 - Inicializar o client em outro terminal a partir da **pasta client**: 
+
+	user@host:~/dourasoft/client$ npm start
+
+
+
 
 ## Dúvidas:
 

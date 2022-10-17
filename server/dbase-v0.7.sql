@@ -11,8 +11,8 @@ create table order_items (
 
 
 -- Inserindo registros
-insert into order_items(order_id, product_id, quantity) values (5, 107, 10);
-insert into order_items(order_id, product_id, quantity) values (5, 105, 5);
+insert into order_items(order_id, product_id, quantity) values (5, 100, 10);
+insert into order_items(order_id, product_id, quantity) values (5, 101, 5);
 
 
 

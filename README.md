@@ -39,38 +39,48 @@ Banco de Dados: ElephantSQL (Posgres) em nuvem
 4 - Clonar o repositório do github em uma pasta (exemplo: "user@host:~$"):
 
 	user@host:~$ git clone "endereco_http"
+
+5 - Entrar na pasta e realizar o git checkout no branch "desafio-guimarra"
+
+	user@host:~$ cd dourasoft
+
+	user@host:~/dourasoft$ git checkout desafio-guimarra
     
-5 - Entrar na pasta server e Instalar dependencias:
+6 - Entrar na pasta server e Instalar dependencias:
 
 	user@host:~/dourasoft$ cd server
+
 	user@host:~/dourasoft/server$ npm install
 
 
-6 - Instalar dependencias pasta client:
+7 - Instalar dependencias pasta client:
 
 	user@host:~/dourasoft$ cd client
-	user@host:~/dourasoft/client$ npm install express, .env, pg, cors 
 
-7 - Banco de dados: foram utilizados no desenvolvimento banco de dados em servidor local e também banco de dados em nuvem. Por praticidade, o banco de dados configurado atualmente está implementado externamente na nuvem (PostgreSQL - ElephantSQL):
+	user@host:~/dourasoft/client$ npm install
+
+8 - Banco de dados: foram utilizados no desenvolvimento banco de dados em servidor local e também banco de dados em nuvem. Por praticidade, o banco de dados configurado atualmente está implementado externamente na nuvem (PostgreSQL - ElephantSQL):
 
 	As credenciais de acesso ao ElephantSQL estão em um arquivo .env enviado no email paulo@dourasoft.com.br .  
 
 	Este arquivo .env deve ser inserido dentro da pasta "server" neste momento.
 
-8 - Em caso de se manter em uso do Banco de Dados em nuvem, pular este passo. Caso desejar utilizar banco Postgres local, deve-se:
+9 - Em caso de se manter em uso do Banco de Dados em nuvem, pular este passo. Caso desejar utilizar banco Postgres local, deve-se:
 
 ### a - instalar o PosgreSQL seguindo o roteiro deste link [link](https://www.postgresql.org/download/linux/ubuntu/)
 
 ### b - instalar o pgAdmin4 mostrado no roteiro deste [link](https://www.pgadmin.org/download/pgadmin-4-apt/) 
 
 
-9 - Inicializar o server em um terminal a partir da **pasta server** (recomendado vscode com 02 terminais em modo split): 
+10 - Inicializar o server em um terminal a partir da **pasta server** (recomendado vscode com 02 terminais em modo split): 
 
 	user@host:~/dourasoft/server$ nodemon
 
-10 - Inicializar o client em outro terminal a partir da **pasta client**: 
+11 - Inicializar o client em outro terminal a partir da **pasta client**: 
 
 	user@host:~/dourasoft/client$ npm start
+
+12 - Uma instância do navegador deverá abrir o endereço http://localhost:3000 com o projeto
 
 
 

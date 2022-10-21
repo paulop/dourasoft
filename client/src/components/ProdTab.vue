@@ -1,8 +1,6 @@
 <template>
     <div class="q-pa-md">
-      <q-btn dense color="red"  icon="delete"/>
-      <q-separator />
-      <q-table
+        <q-table
         title="Listagem de Produtos"
         :rows="rows"
         :columns="columns"
@@ -46,17 +44,14 @@
         </q-card-actions>
       </q-card>
       </q-dialog>
-      
-
 
     </div>
-
-    
-
-  </template>
+</template>
   
-  <script>
+<script>
+  import { useQuasar } from 'quasar'
   import {ref} from 'vue'
+
 
   const fetchData =  async () => {
       try {
@@ -73,7 +68,6 @@
 
   const columns = [
 
-
     { name: 'id', align: 'left', label: 'ID', field: 'id', sortable: true },
     { name: 'cod_prod', align: "left", label: 'Código Produto', field: 'cod_prod', sortable: true },
     { name: 'name', align: "left", label: 'Nome', field: 'prod_name' },
@@ -89,12 +83,50 @@
   
   export default {
     setup () {
-      return{
-        columns,
-        rows,
-        fixed: ref(false)
+    const $q = useQuasar()
+
+    const cod_prod = ref(null)
+    const name = ref(null)
+    const description = ref(null)
+    const price = ref(false)    
+
+    return {
+      columns,
+      rows,
+      fixed: ref(false),
+
+
+      onSubmit () {
+        if (cod_prod.value && name.value && description.value && price.value ) {
+          $q.notify({
+            color: 'red-5',
+            textColor: 'white',
+            icon: 'warning',
+            message: 'You need to accept the license and terms first'
+          })
+        }
+        else {
+          $q.notify({
+            color: 'green-4',
+            textColor: 'white',
+            icon: 'cloud_done',
+            message: 'Submitted'
+          })
+        }
+      },
+
+      
+      onReset () {
+        cod_prod.value = null
+        name.value = null
+        description.value = null
+        price.value = null
       }
     }
+    
+    }
   }
-  </script>
+
+  
+</script>
   

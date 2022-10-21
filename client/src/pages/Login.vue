@@ -48,7 +48,7 @@
               <div>
                 <q-btn
                   label="Login"
-                  to="/products"
+                  to="/Products"
                   type="button"
                   color="primary"
                   @click="loginNotify"

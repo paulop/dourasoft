@@ -40,9 +40,7 @@
       class="left-navigation text-white"
       show-if-above
       v-model="left"
-      style="
-        background-image: url(https://demos.creative-tim.com/vue-material-dashboard/img/sidebar-2.32103624.jpg) !important;
-      "
+
       side="left"
       elevated
     >
@@ -108,11 +106,6 @@ export default {
 </script>
 
 <style>
-.q-drawer {
-  /*background-image: url(https://demos.creative-tim.com/vue-material-dashboard/img/sidebar-2.32103624.jpg) !important;*/
-  background-image: url("/statics/images/lake.jpg") !important;
-  background-size: cover !important;
-}
 
 .drawer_normal {
   background-color: rgba(1, 1, 1, 0.75);
@@ -127,7 +120,7 @@ export default {
 }
 
 .tab-active {
-  background-color: green;
+  background-color: rgb(32, 106, 80);
 }
 
 body {

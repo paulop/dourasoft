@@ -1,144 +1,98 @@
 <template>
     <div class="q-pa-md">
+      <q-btn dense color="red"  icon="delete"/>
+      <q-separator />
       <q-table
-        title="Treats"
+        title="Listagem de Produtos"
         :rows="rows"
         :columns="columns"
-        row-key="name"
-        dark
-        color="amber"
-      />
+        row-key="detail"
+      >
+      
+      <template v-slot:body-cell-edit="props">
+          <q-td :props="props">
+            <q-btn @click="fixed=true" dense round color="secondary" icon="edit"/>
+          </q-td>
+      </template>
+
+      <template v-slot:body-cell-delete="props">
+        <q-td :props="props">
+          <div class="q-gutter-sm flex flex-center">
+          <q-btn dense color="red"  icon="delete"/>
+          </div>
+        </q-td>
+      </template>
+
+      
+      </q-table>
+
+      <q-dialog v-model="fixed">
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">Terms of Agreement</div>
+        </q-card-section>
+
+        <q-separator />
+
+        <q-card-section style="max-height: 50vh" class="scroll">
+          <p v-for="n in 15" :key="n">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet porro. Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.</p>
+        </q-card-section>
+
+        <q-separator />
+
+        <q-card-actions align="right">
+          <q-btn flat label="Decline" color="primary" v-close-popup />
+          <q-btn flat label="Accept" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+      </q-dialog>
+      
+
+
     </div>
+
+    
+
   </template>
   
   <script>
-  const columns = [
-    {
-      name: 'name',
-      required: true,
-      label: 'Dessert (100g serving)',
-      align: 'left',
-      field: row => row.name,
-      format: val => `${val}`,
-      sortable: true
-    },
-    { name: 'calories', align: 'center', label: 'Calories', field: 'calories', sortable: true },
-    { name: 'fat', label: 'Fat (g)', field: 'fat', sortable: true },
-    { name: 'carbs', label: 'Carbs (g)', field: 'carbs' },
-    { name: 'protein', label: 'Protein (g)', field: 'protein' },
-    { name: 'sodium', label: 'Sodium (mg)', field: 'sodium' },
-    { name: 'calcium', label: 'Calcium (%)', field: 'calcium', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) },
-    { name: 'iron', label: 'Iron (%)', field: 'iron', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) }
-  ]
-  
-  const rows = [
-    {
-      name: 'Frozen Yogurt',
-      calories: 159,
-      fat: 6.0,
-      carbs: 24,
-      protein: 4.0,
-      sodium: 87,
-      calcium: '14%',
-      iron: '1%'
-    },
-    {
-      name: 'Ice cream sandwich',
-      calories: 237,
-      fat: 9.0,
-      carbs: 37,
-      protein: 4.3,
-      sodium: 129,
-      calcium: '8%',
-      iron: '1%'
-    },
-    {
-      name: 'Eclair',
-      calories: 262,
-      fat: 16.0,
-      carbs: 23,
-      protein: 6.0,
-      sodium: 337,
-      calcium: '6%',
-      iron: '7%'
-    },
-    {
-      name: 'Cupcake',
-      calories: 305,
-      fat: 3.7,
-      carbs: 67,
-      protein: 4.3,
-      sodium: 413,
-      calcium: '3%',
-      iron: '8%'
-    },
-    {
-      name: 'Gingerbread',
-      calories: 356,
-      fat: 16.0,
-      carbs: 49,
-      protein: 3.9,
-      sodium: 327,
-      calcium: '7%',
-      iron: '16%'
-    },
-    {
-      name: 'Jelly bean',
-      calories: 375,
-      fat: 0.0,
-      carbs: 94,
-      protein: 0.0,
-      sodium: 50,
-      calcium: '0%',
-      iron: '0%'
-    },
-    {
-      name: 'Lollipop',
-      calories: 392,
-      fat: 0.2,
-      carbs: 98,
-      protein: 0,
-      sodium: 38,
-      calcium: '0%',
-      iron: '2%'
-    },
-    {
-      name: 'Honeycomb',
-      calories: 408,
-      fat: 3.2,
-      carbs: 87,
-      protein: 6.5,
-      sodium: 562,
-      calcium: '0%',
-      iron: '45%'
-    },
-    {
-      name: 'Donut',
-      calories: 452,
-      fat: 25.0,
-      carbs: 51,
-      protein: 4.9,
-      sodium: 326,
-      calcium: '2%',
-      iron: '22%'
-    },
-    {
-      name: 'KitKat',
-      calories: 518,
-      fat: 26.0,
-      carbs: 65,
-      protein: 7,
-      sodium: 54,
-      calcium: '12%',
-      iron: '6%'
+  import {ref} from 'vue'
+
+  const fetchData =  async () => {
+      try {
+        const response = await fetch('http://localhost:3001/api/v1/regs');
+        const data = await response.json();
+        //console.log(data.rows);
+        return(data.rows)
+
+      } catch (error) {
+        console.log(error.message)
+        }
     }
+    const data = await fetchData();
+
+  const columns = [
+
+
+    { name: 'id', align: 'left', label: 'ID', field: 'id', sortable: true },
+    { name: 'cod_prod', align: "left", label: 'Código Produto', field: 'cod_prod', sortable: true },
+    { name: 'name', align: "left", label: 'Nome', field: 'prod_name' },
+    { name: 'description', align: "left", label: 'Descrição', field: 'description' },
+    { name: 'price', align: "left", label: 'Preço', field: 'price', sortable: true },
+    { name: 'edit', align: "left", label: 'Editar', field: 'edit', sortable: true },
+    { name: 'delete', align: "delete", label: 'Deletar', field: 'delete', sortable: true }
+
   ]
+
+  const rows = data;
+    
   
   export default {
     setup () {
-      return {
+      return{
         columns,
-        rows
+        rows,
+        fixed: ref(false)
       }
     }
   }

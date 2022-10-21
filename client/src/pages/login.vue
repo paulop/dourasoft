@@ -17,7 +17,7 @@
         <q-card
           class="login-form"
           v-bind:style="
-            $q.platform.is.mobile ? { width: '80%' } : { width: '30%' }
+            $q.platform.is.mobile ? { width: '80%' } : { width: '30%', height:'70%' }
           "
         >
           <q-img src="../statics/images/crud.png"></q-img>:

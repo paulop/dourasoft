@@ -1,7 +1,7 @@
 <template>
     <div class="q-pa-md">
         <q-table
-        title="Listagem de Produtos"
+        title="Listagem de Clientes"
         :rows="rows"
         :columns="columns"
         row-key="name"
@@ -22,10 +22,10 @@
             </template>     
       </q-table>
 
-      <q-dialog v-model="edit">
+      <q-dialog v-model="alter">
             <q-card style="max-width: 500px;width:500px;height:470px">
                 <q-card-section>
-                    <div class="text-h6">Editar produto</div>
+                    <div class="text-h6">Editar cliente</div>
                 </q-card-section>
 
                 <q-separator />
@@ -34,7 +34,7 @@
             <div class="q-ma-md flex justify-evenly " style="height: 320px">
             
                 <q-form
-                    @submit="onSubmit(id, pr, nm, dsc, pri )"
+                    @submit="onSubmit(id, cnm, ph, addr)"
                     @reset="onReset"
                     
                     class="q-gutter-xs"
@@ -45,20 +45,20 @@
                     <q-input
                     filled
                     dense
-                    type="number"
-                    value="pr"
-                    v-model.number="pr"
-                    label="Código"
+                    value="cnm"
+                    v-model="cnm"
+                    label="Nome Cliente"
                     lazy-rules
                     style="width: 400px"
-                    :rules="[ val => val && true || 'Insira dados']"
+                    :rules="[val => val !== null && val !== '' || 'Insira dados']"
                     />
 
                     <q-input
                     filled
                     dense
-                    v-model="nm"
-                    label="Produto"
+                    value="ph"
+                    v-model="ph"
+                    label="Fone (11-digitos)"
                     lazy-rules
                     style="width: 400px"
                     :rules="[val => val !== null && val !== '' || 'Insira dados']"
@@ -67,23 +67,12 @@
                     <q-input
                     filled
                     dense
-                    v-model="dsc"
-                    label="Descrição"
+                    value="addr"
+                    v-model="addr"
+                    label="Endereço"
                     lazy-rules
                     style="width: 400px"
                     :rules="[val => val !== null && val !== '' || 'Insira dados']"
-                    />
-
-                    <q-input
-                    filled
-                    dense
-                    type="number"
-                    step="any"
-                    v-model.number="pri"
-                    label="Preço"
-                    lazy-rules
-                    style="width: 400px"
-                    :rules="[ val => val && true || 'Insira dados']"
                     />
 
                     <div>
@@ -113,18 +102,15 @@
   import {api} from 'boot/axios'
 
 
-
-
   export default {
     methods: {
         openmodel(row){
             console.log("hi")
-            this.edit=true;
+            this.alter=true;
             this.id = row.id;
-            this.pr = row.cod_prod;
-            this.nm = row.prod_name;
-            this.dsc = row.description;
-            this.pri = row.price
+            this.cnm = row.customer_name;
+            this.ph = row.phone;
+            this.addr = row.addr
         }
     },
     setup () {
@@ -133,10 +119,9 @@
 
 
     const id = ref(null)
-    const pr = ref(null)
-    const nm = ref(null)
-    const dsc = ref(null)
-    const pri = ref(null)   
+    const cnm = ref(null)
+    const ph = ref(null)
+    const addr = ref(null)   
 
     const rows = ref([])
 
@@ -152,8 +137,8 @@
 
     const fetchData =  async () => {
       try {
-        //const data = await fetch('http://localhost:3001/api/v1/regs');
-        const {data} = await api.get('http://localhost:3001/api/v1/regs');
+        //const data = await fetch('http://localhost:3001/customers/api/v1/cons');
+        const {data} = await api.get('http://localhost:3001/customers/api/v1/cust');
         console.log(data)
         //const info = await data.json();
         //console.log(info.rows)
@@ -168,10 +153,9 @@
     const columns = [
 
         { name: 'id', align: 'left', label: 'ID', field: 'id', sortable: true },
-        { name: 'cod_prod', align: "left", label: 'Código Produto', field: 'cod_prod', sortable: true },
-        { name: 'name', align: "left", label: 'Nome', field: 'prod_name' },
-        { name: 'description', align: "left", label: 'Descrição', field: 'description' },
-        { name: 'price', align: "left", label: 'Preço', field: 'price', sortable: true },
+        { name: 'customer_name', align: "left", label: 'Nome Cliente', field: 'customer_name', sortable: true },
+        { name: 'phone', align: "left", label: 'Fone', field: 'phone' },
+        { name: 'addr', align: "left", label: 'Endereço', field: 'addr', sortable: true },
         { name: 'edit', align: "left", label: 'Editar', field: 'edit', sortable: true },
         { name: 'delete', align: "delete", label: 'Deletar', field: 'delete', sortable: true }
 
@@ -192,7 +176,7 @@
             console.log('item deletado')
             const options = {method: 'DELETE'};
             //console.log(id)
-            const deleteProd = await fetch(`http://localhost:3001/api/v1/regs/${String(id)}`, options);
+            const deleteProd = await fetch(`http://localhost:3001/customers/api/v1/cust/${String(id)}`, options);
             //await del()
 
             fetchData()
@@ -206,24 +190,23 @@
     return {
         columns,
         rows,
-        edit: ref(false),
+        alter: ref(false),
 
         id,
-        pr,
-        nm,
-        dsc,
-        pri,
+        cnm,
+        ph,
+        addr,
         handleDelete,
         fetchData,
         //openmodel,
 
 
-        onSubmit (id, cod_prod, prod_name, description, price) {
+        onSubmit (id, customer_name, phone, addr) {
 
             try {
-                const body = {cod_prod, prod_name, description, price};
+                const body = {customer_name, phone, addr};
     
-                const response = api.put(`http://localhost:3001/api/v1/regs/${String(id)}`, body)
+                const response = api.put(`http://localhost:3001/customers/api/v1/cust/${String(id)}`, body)
 
                 $q.notify({
                 color: 'green-4',
@@ -241,21 +224,11 @@
 
         
         onReset () {
-            pr.value = null
-            nm.value = null
-            dsc.value = null
-            pri.value = null
+            cnm.value = null
+            ph.value = null
+            addr.value = null
         }
     }
-    /*
-    methods:{
-        openmodel(row){
-            console.log("hi")
-            this.selected_row = row;
-            this.alert=true;
-        }
-    }
-    */
     
     }
   }

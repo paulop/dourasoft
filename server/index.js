@@ -45,9 +45,9 @@ app.post("/api/v1/register", async (req,res) => {
 
     app.get("/api/v1/regs", async (req,res) => {
         try {
-            const allRegs = await pool.query("SELECT * FROM products");
-            //console.log(allRegs);
-            res.send(allRegs);
+            const allRegs = await pool.query("SELECT * FROM products ORDER BY id");
+            //console.log(allRegs.rows);
+            res.send(allRegs.rows);
         } catch (err) {
             console.error(err.message)
         }
@@ -128,9 +128,9 @@ app.post("/customers/api/v1/cust", async (req,res) => {
 
     app.get("/customers/api/v1/cust", async (req,res) => {
         try {
-            const allRegs = await pool.query("SELECT * FROM customers");
+            const allRegs = await pool.query("SELECT * FROM customers ORDER BY id");
             //console.log(allRegs);
-            res.send(allRegs);
+            res.send(allRegs.rows);
         } catch (err) {
             console.error(err.message)
         }

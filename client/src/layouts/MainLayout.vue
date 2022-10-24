@@ -68,6 +68,32 @@
 
                 <q-item-section> Produtos </q-item-section>
               </q-item>
+              <q-item
+                active-class="tab-active"
+                to="/customers"
+                class="q-ma-sm navigation-item"
+                clickable
+                v-ripple
+              >
+                <q-item-section avatar>
+                  <q-icon name="list" />
+                </q-item-section>
+
+                <q-item-section> Clientes </q-item-section>
+              </q-item>
+              <q-item
+                active-class="tab-active"
+                to="/orders"
+                class="q-ma-sm navigation-item"
+                clickable
+                v-ripple
+              >
+                <q-item-section avatar>
+                  <q-icon name="list" />
+                </q-item-section>
+
+                <q-item-section> Pedidos </q-item-section>
+              </q-item>
             </q-list>
           </q-scroll-area>
         </div>

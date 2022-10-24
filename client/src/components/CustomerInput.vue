@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-            <h6 class="q-ma-lg">Inserir Produto</h6>
+            <h6 class="q-ma-lg">Inserir Cliente</h6>
     </div>
     
     <div class="q-ma-none flex justify-evenly" style="max-width: 1400px">
@@ -14,17 +14,16 @@
         <q-input
           filled
           dense
-          type="number"
-          v-model.number="cod_prod"
-          label="Código"
+          v-model="customer_name"
+          label="Nome Cliente"
           lazy-rules
-          :rules="[ val => val && true || 'Insira dados']"
+          :rules="[val => val !== null && val !== '' || 'Insira dados']"
         />
         <q-input
           filled
           dense
-          v-model="prod_name"
-          label="Produto"
+          v-model="phone"
+          label="Fone 11-dígitos"
           lazy-rules
           :rules="[val => val !== null && val !== '' || 'Insira dados']"
         />
@@ -32,23 +31,13 @@
         <q-input
           filled
           dense
-          v-model="description"
-          label="Descrição"
+          v-model="addr"
+          label="Endereço"
           lazy-rules
           :rules="[val => val !== null && val !== '' || 'Insira dados']"
         />
 
-        <q-input
-          filled
-          dense
-          type="number"
-          step="any"
-          v-model.number="price"
-          label="Preço"
-          lazy-rules
-          :rules="[ val => val && true || 'Insira dados']"
-        />
-  
+ 
         <div>
           <q-btn  label="Adicionar" type="submit" color="primary" size="12px"/>
           <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" size="12px" />
@@ -63,11 +52,11 @@
     import { ref } from 'vue'
     import {api} from 'boot/axios'
 
-      
-    const getData = async (cod_prod, prod_name, description, price) => {
+     
+    const getData = async (customer_name, phone, addr) => {
 
         try {
-            const body = {cod_prod, prod_name, description, price};
+            const body = {customer_name, phone, addr};
             //console.log(typeof(body));
             //console.log(body)
             
@@ -77,9 +66,9 @@
             //    body: JSON.stringify(body)
             //};
 
-            //const response = await fetch('http://localhost:3001/api/v1/register', options
+            //const response = await fetch('http://localhost:3001/customers/api/v1/cust', options
 
-            const {data} = await api.post('http://localhost:3001/api/v1/register', body)
+            const {data} = await api.post('http://localhost:3001/customers/api/v1/cust', body)
 
             //await saveFile(response)
 
@@ -96,7 +85,6 @@
             //Fast solution for table refresh - Will be switched for Vuex soon
             window.location.reload();
 
-
         } catch (error) {
             console.log(error.message);
         }
@@ -108,27 +96,24 @@
             const $q = useQuasar()
             //const sharedData = ref(sharedData)
         
-            const cod_prod = ref(null)
-            const prod_name = ref(null)
-            const description = ref(null)
-            const price = ref(null)
+            const customer_name = ref(null)
+            const phone = ref(null)
+            const addr = ref(null)
         
             return {
-                cod_prod,
-                prod_name,
-                description,
-                price,
+                customer_name,
+                phone,
+                addr,
         
                 onSubmit () {
-                    getData(cod_prod.value, prod_name.value, description.value, price.value)
+                    getData(customer_name.value, phone.value, addr.value)
                     
                 },
         
                 onReset () {
-                cod_prod.value = null
-                prod_name.value = null
-                description.value = null
-                price.value = null
+                customer_name.value = null
+                phone.value = null
+                addr.value = null
                 }
             }
         }

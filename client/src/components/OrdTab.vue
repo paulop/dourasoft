@@ -1,12 +1,23 @@
 <template>
     <div class="q-pa-md">
         <q-table
-        title="Listagem de Produtos"
+        title="Listagem de Pedidos"
         :rows="rows"
         :columns="columns"
         row-key="name"
-        :rows-per-page-options="[20]"
         >
+            <template v-slot:top-right>
+                <q-btn dense debounce="300" v-model="sch" placeholder="Busca/insere cliente">
+                <template v-slot:append>
+                    <q-icon name="search" />
+                </template>
+                </q-btn>
+            </template>
+            <template v-slot:body-cell-detail="props">
+                <q-td :props="props">
+                    <q-btn @click="handleDetail(props.row.id)" dense round color="secondary" icon="article"/>
+                </q-td>
+            </template>
       
             <template v-slot:body-cell-edit="props">
                 <q-td :props="props">
@@ -26,7 +37,7 @@
       <q-dialog v-model="edit">
             <q-card style="max-width: 500px;width:500px;height:470px">
                 <q-card-section>
-                    <div class="text-h6">Editar produto</div>
+                    <div class="text-h6">Editar Pedidos</div>
                 </q-card-section>
 
                 <q-separator />
@@ -35,7 +46,7 @@
             <div class="q-ma-md flex justify-evenly " style="height: 320px">
             
                 <q-form
-                    @submit="onSubmit(id, pr, nm, dsc, pri )"
+                    @submit="onSubmit(id, ci, dt, st )"
                     @reset="onReset"
                     
                     class="q-gutter-xs"
@@ -47,9 +58,9 @@
                     filled
                     dense
                     type="number"
-                    value="pr"
-                    v-model.number="pr"
-                    label="Código"
+                    value="ci"
+                    v-model.number="ci"
+                    label="Código Cliente"
                     lazy-rules
                     style="width: 400px"
                     :rules="[ val => val && true || 'Insira dados']"
@@ -58,8 +69,8 @@
                     <q-input
                     filled
                     dense
-                    v-model="nm"
-                    label="Produto"
+                    v-model="dt"
+                    label="Data"
                     lazy-rules
                     style="width: 400px"
                     :rules="[val => val !== null && val !== '' || 'Insira dados']"
@@ -68,23 +79,11 @@
                     <q-input
                     filled
                     dense
-                    v-model="dsc"
-                    label="Descrição"
+                    v-model="st"
+                    label="Status"
                     lazy-rules
                     style="width: 400px"
                     :rules="[val => val !== null && val !== '' || 'Insira dados']"
-                    />
-
-                    <q-input
-                    filled
-                    dense
-                    type="number"
-                    step="any"
-                    v-model.number="pri"
-                    label="Preço"
-                    lazy-rules
-                    style="width: 400px"
-                    :rules="[ val => val && true || 'Insira dados']"
                     />
 
                     <div>
@@ -112,7 +111,7 @@
   import { useQuasar } from 'quasar'
   import {ref, onMounted} from 'vue'
   import {api} from 'boot/axios'
-
+  import {useRouter} from 'vue-router'
 
 
 
@@ -122,26 +121,25 @@
             console.log("hi")
             this.edit=true;
             this.id = row.id;
-            this.pr = row.cod_prod;
-            this.nm = row.prod_name;
-            this.dsc = row.description;
-            this.pri = row.price
+            this.ci = row.customer_id;
+            this.dt = row.date;
+            this.st = row.status;
+            this.tot = row.total;
         }
     },
     setup () {
 
     const $q = useQuasar()
 
+    const router = useRouter()
 
     const id = ref(null)
-    const pr = ref(null)
-    const nm = ref(null)
-    const dsc = ref(null)
-    const pri = ref(null)   
+    const ci = ref(null)
+    const dt = ref(null)
+    const st = ref(null)
+    const tot = ref(null)
 
     const rows = ref([])
-
-
 
     const showNotif = () => {
         $q.notify({
@@ -150,11 +148,10 @@
         })
     }
 
-
     const fetchData =  async () => {
       try {
-        //const data = await fetch('http://localhost:3001/api/v1/regs');
-        const {data} = await api.get('http://localhost:3001/api/v1/regs');
+        //const data = await fetch('http://localhost:3001/orders/api/v1/ord');
+        const {data} = await api.get('http://localhost:3001/orders/api/v1/ord');
         console.log(data)
         //const info = await data.json();
         //console.log(info.rows)
@@ -169,14 +166,19 @@
     const columns = [
 
         { name: 'id', align: 'left', label: 'ID', field: 'id', sortable: true },
-        { name: 'cod_prod', align: "left", label: 'Código Produto', field: 'cod_prod', sortable: true },
-        { name: 'name', align: "left", label: 'Nome', field: 'prod_name' },
-        { name: 'description', align: "left", label: 'Descrição', field: 'description' },
-        { name: 'price', align: "left", label: 'Preço', field: 'price', sortable: true },
+        { name: 'customer_id', align: "left", label: 'Código Cliente', field: 'customer_id', sortable: true },
+        { name: 'date', align: "left", label: 'Data', field: 'date' },
+        { name: 'status', align: "left", label: 'Status', field: 'status' },
+        { name: 'total', align: "left", label: 'Total', field: 'total' },
+        { name: 'detail', align: "left", label: 'Detalhes', field: 'detail', sortable: true },
         { name: 'edit', align: "left", label: 'Editar', field: 'edit', sortable: true },
         { name: 'delete', align: "delete", label: 'Deletar', field: 'delete', sortable: true }
 
     ];
+
+    const handleDetail = (id) => {
+        router.push({name:'Details', params:{id}})
+    }
 
 
     onMounted(()=>{
@@ -193,7 +195,7 @@
             console.log('item deletado')
             const options = {method: 'DELETE'};
             //console.log(id)
-            const deleteProd = await fetch(`http://localhost:3001/api/v1/regs/${String(id)}`, options);
+            const deleteProd = await fetch(`http://localhost:3001/orders/api/v1/ord/${String(id)}`, options);
             //await del()
 
             fetchData()
@@ -210,21 +212,24 @@
         edit: ref(false),
 
         id,
-        pr,
-        nm,
-        dsc,
-        pri,
+        ci,
+        dt,
+        st,
+        tot,
         handleDelete,
         fetchData,
+        handleDetail,
         //openmodel,
 
 
-        onSubmit (id, cod_prod, prod_name, description, price) {
+        onSubmit (id, customer_id, date, status) {
 
             try {
-                const body = {cod_prod, prod_name, description, price};
+                const body = {customer_id, date, status};
+
+                console.log(body)
     
-                const response = api.put(`http://localhost:3001/api/v1/regs/${String(id)}`, body)
+                const response = api.put(`http://localhost:3001/orders/api/v1/ord/${String(id)}`, body)
 
                 $q.notify({
                 color: 'green-4',
@@ -242,10 +247,9 @@
 
         
         onReset () {
-            pr.value = null
-            nm.value = null
-            dsc.value = null
-            pri.value = null
+            ci.value = null
+            dt.value = null
+            st.value = null
         }
     }
     /*

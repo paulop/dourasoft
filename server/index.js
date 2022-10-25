@@ -214,10 +214,10 @@ app.post("/orders/api/v1/ord", async (req,res) => {
     app.get("/orders/api/v1/ord", async (req,res) => {
         try {
             //const allRegs = await pool.query("SELECT * FROM orders");
-            const allRegs = await pool.query("select o.id, o.customer_id, o.date, o.status, sum(oi.quantity*p.price) as Total from orders o left join order_items oi on oi.order_id = o.id left join products p on p.id = oi.product_id left join customers c on c.id = o.customer_id group by o.id, o.customer_id, c.customer_name, o.status, o.date, oi.order_id order by oi.order_id");
+            const allRegs = await pool.query("select o.id, o.customer_id, to_char(o.date, 'YYYY-mm-dd') as date, o.status, sum(oi.quantity*p.price) as Total from orders o left join order_items oi on oi.order_id = o.id left join products p on p.id = oi.product_id left join customers c on c.id = o.customer_id group by o.id, o.customer_id, c.customer_name, o.status, o.date, oi.order_id order by oi.order_id");
 
             //console.log(allRegs);
-            res.send(allRegs);
+            res.send(allRegs.rows);
         } catch (err) {
             console.error(err.message)
         }
@@ -265,8 +265,8 @@ app.get("/orders/api/v1/ordet/:id", async (req,res) => {
     try {
         const {id} = req.params;
         const allOD = await pool.query("select p.id, p.prod_name, oi.quantity, p.price, (oi.quantity*p.price) as subtotal from order_items oi inner join products p on oi.product_id = p.id WHERE oi.order_id = $1",[id]);
-        console.log(allOD);
-        res.send(allOD)
+        console.log(allOD.rows);
+        res.send(allOD.rows)
     } catch (err) {
         console.error(err.message)
     }

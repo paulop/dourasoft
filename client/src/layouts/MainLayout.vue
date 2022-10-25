@@ -13,9 +13,6 @@
           icon="menu"
           class="q-mr-sm"
         />
-        <!--          <q-avatar>-->
-        <!--            <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">-->
-        <!--          </q-avatar>-->
 
         <q-toolbar-title>Menu</q-toolbar-title>
         <q-btn

@@ -68,22 +68,9 @@
 
         try {
             const body = {cod_prod, prod_name, description, price};
-            //console.log(typeof(body));
-            //console.log(body)
-            
-            //const options = {
-            //    method: 'POST',
-            //    headers: {'Content-Type': 'application/json'},
-            //    body: JSON.stringify(body)
-            //};
-
-            //const response = await fetch('http://localhost:3001/api/v1/register', options
 
             const {data} = await api.post('http://localhost:3001/api/v1/register', body)
 
-            //await saveFile(response)
-
-            //await loadFile(response)
 
             await console.log(data) 
 

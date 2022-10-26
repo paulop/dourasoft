@@ -5,7 +5,6 @@
         :rows="rows"
         :columns="columns"
         row-key="name"
-        :rows-per-page-options="[10]"
         >
       
             <template v-slot:body-cell-edit="props">
@@ -215,8 +214,11 @@
                 icon: 'cloud_done',
                 message: 'Registro Atualizado'
             })
-
-                fetchData()
+                
+            setTimeout(() => {
+                fetchData();
+            }, "500")
+                
                 
             } catch (error) {
                 

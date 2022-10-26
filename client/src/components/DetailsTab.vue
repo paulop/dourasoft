@@ -9,6 +9,12 @@
         >
         <template v-slot:top-left><q-tr class="q-pa-md text-h6">Venda #{{getId}}</q-tr></template>
 
+        <template v-slot:top-right>
+            <div class="q-pa-md q-gutter-sm justify-left">
+                <q-btn  label="Retorna Tela Pedidos" @click="returnPage()" color="primary" size="10px"/>
+            </div>
+        </template>
+
         <template v-slot:body-cell-delete="props">
             <q-td :props="props">
                 <div class="q-gutter-sm flex flex-center">
@@ -29,7 +35,7 @@
                   <q-td>
                     {{getTotal}}
                   </q-td>
-                </q-tr>
+            </q-tr>
         </template> 
             
     </q-table>
@@ -45,37 +51,37 @@
         :rows-per-page-options="[10]"
         >
 
-      <template v-slot:top-left>
-        <div class="row">  
-        <div class="col-5">
-            <div class="q-pa-xs text-h6">Inserir Produto</div>
+        <template v-slot:top-left>
+            <div class="row">  
+            <div class="col-5">
+                <div class="q-pa-xs text-h6">Inserir Produto</div>
 
-        </div>
-        <div class="col-1">
+            </div>
+            <div class="col-1">
 
-        </div>
-        <div class="col-5">
-            <q-input border dense debounce="300" type="text" @keydown.enter.prevent="submitSch()" v-model.trim="filter" placeholder="Search">
-            <template v-slot:append>
-                <q-icon name="search" />
-            </template>
-        </q-input>
+            </div>
+            <div class="col-5">
+                <q-input border dense debounce="300" type="text" @keydown.enter.prevent="submitSch()" v-model.trim="filter" hint="Digite + ENTER" placeholder="Pesquisar">
+                <template v-slot:append>
+                    <q-icon name="search" />
+                </template>
+            </q-input>
 
-        </div>
+            </div>
 
-        </div>
-        
+            </div>  
         
         </template>
 
-        <template v-slot:body-cell-quantity="props">
-            <q-td :props="props">
+        <template v-slot:body-cell-quantity>
+            <q-td>
                 <div class="q-gutter-sm flex flex-center">
                     <q-input
                         dense
                         type="number"
                         v-model.number="itemqty"
                         label="Inserir"
+                        @change="postQty()"
                         style="width: 50px"
                         lazy-rules
                         :rules="[ val => val && true || 'Insira dados']"
@@ -83,11 +89,19 @@
                 </div>
             </q-td>
         </template>
+
+        <template v-slot:body-cell-subtotal="props">
+            <q-td :props="props">
+                <div class="q-gutter-sm flex flex-center">
+                    <q-input borderless dense v-model.number="sub" />
+                </div>
+            </q-td>
+        </template> 
+
         <q-separator />
         <template v-slot:bottom-row>
-            <div class="flex-row justify-around">
-                <q-btn  label="Adicionar" type="submit" color="primary" size="12px"/>
-                <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" size="12px" />
+            <div class="q-pa-md q-gutter-sm justify-left">
+                <q-btn  label="Adicionar" @click="addOrditem(getId, pid, itemqty)" color="primary" size="12px"/>
             </div>
         </template>
     </q-table>
@@ -101,7 +115,7 @@
     import { useQuasar } from 'quasar'
     import {ref, onMounted} from 'vue'
     import {api} from 'boot/axios'
-    import {useRoute} from 'vue-router'
+    import {useRouter, useRoute} from 'vue-router'
 
 
 export default {
@@ -110,12 +124,13 @@ export default {
 
     const $q = useQuasar()
     const route = useRoute();
+    const router = useRouter();
 
     const getTotal = ref(0)
     const getId = ref(0)
-    const itemqty = ref(0)
+    const itemqty = ref(1)
 
-    const pn = ref(null)
+    const pid = ref(0)
     const qty = ref(null)
     const pri = ref(null)
     const sub = ref(null)
@@ -125,6 +140,10 @@ export default {
     const srows = ref([])
     const filter = ref('')
 
+    const returnPage = () => {
+        router.push({name:'Orders'})
+    }
+
     const showNotif = () => {
         $q.notify({
           message: 'Teste',
@@ -132,16 +151,24 @@ export default {
         })
     }
 
-
-
     const submitSch = async () => {
         //console.log(cod_prod)
         const prod_name = filter.value
         const body = {prod_name};   
         console.log(body)   
         const {data} = await api.post('http://localhost:3001/api/v1/regs/spec', body)
+        pri.value = data[0].price;
+        pid.value = data[0].id;
+        sub.value = itemqty.value*pri.value;
         srows.value = data;
+        //getId.value, pid.value, itemqty.value 
+        // itemqty.value
+        console.log(data);
+    }
 
+    const postQty = () => {
+
+        sub.value = parseFloat(itemqty.value*pri.value).toFixed(2);
     }
 
     const fetchDetails =  async (id) => {
@@ -164,7 +191,21 @@ export default {
         }
     }
 
+    const addOrditem = async (order_id, product_id, quantity) => {
+        
+        try {
+            const body = {order_id, product_id, quantity};
+            console.log(body)
+            const {data} = await api.post('http://localhost:3001/orders/api/v1/ordet', body)
+            await console.log(data) 
 
+            fetchDetails(order_id);
+
+        } catch (error) {
+                   
+        }
+        
+    }
    
     const columns = [
 
@@ -188,15 +229,12 @@ export default {
         router.push({name:'Details', params:{id}})
     }
 
-
     onMounted(()=>{
-        getId.value= route.params.id;
-        fetchDetails(route.params.id);
-        // encontra os parametros da requisicao com useRoute
-
+        // Encontra o parametro da requisicao com route (passados via url)
+        getId.value= parseInt(route.params.id);
+        fetchDetails(getId.value);
        
     })
-
 
     const handleDelete = async (id) => {
         
@@ -228,7 +266,7 @@ export default {
         getTotal,
         getId,
 
-        pn,
+        pid,
         qty,
         pri,
         sub,
@@ -236,7 +274,9 @@ export default {
         submitSch,
         handleDelete,
         fetchDetails,
-        //openmodel,
+        postQty,
+        addOrditem,
+        returnPage,
 
 
         onSubmit (id, customer_id, date, status) {
@@ -254,7 +294,6 @@ export default {
                 icon: 'cloud_done',
                 message: 'Registro Atualizado'
             })
-
                 //fetchDetails()
                 
             } catch (error) {
@@ -269,16 +308,7 @@ export default {
             //st.value = null
         }
     }
-    /*
-    methods:{
-        openmodel(row){
-            console.log("hi")
-            this.selected_row = row;
-            this.alert=true;
-        }
-    }
-    */
-    
+
     }
   }
 

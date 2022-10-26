@@ -209,6 +209,26 @@ app.post("/orders/api/v1/ord", async (req,res) => {
 
 });
 
+
+// read all order registers WITH DATERANGE FILTER - using POST due to sending a body
+
+app.post("/orders/api/v1/ordate", async (req,res) => {
+    try {
+        const dateRange = req.body;
+        console.log(dateRange.from)
+        console.log(dateRange.to)
+        const results = await pool.query(
+            "select o.id, o.customer_id, to_char(o.date, 'YYYY-mm-dd') as date, o.status, sum(oi.quantity*p.price) as Total from orders o left join order_items oi on oi.order_id = o.id left join products p on p.id = oi.product_id left join customers c on c.id = o.customer_id WHERE o.date BETWEEN $1 and $2 group by o.id, o.customer_id, c.customer_name, o.status, o.date, oi.order_id order by oi.order_id", [ dateRange.from, dateRange.to ]);
+        console.log(results.rows);
+        res.send(results.rows)
+    }
+    catch (err) {
+        console.error(err.message);
+    }
+
+});
+
+
 // read all order registers
 
     app.get("/orders/api/v1/ord", async (req,res) => {

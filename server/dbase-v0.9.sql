@@ -1,0 +1,3 @@
+
+-- Alteracao na query de busca de pedido, incluindo filtro de data dateRange
+select o.id, o.customer_id, to_char(o.date, 'YYYY-mm-dd') as date, o.status, sum(oi.quantity*p.price) as Total from orders o left join order_items oi on oi.order_id = o.id left join products p on p.id = oi.product_id left join customers c on c.id = o.customer_id WHERE o.date BETWEEN '2020/09/01' and '2022/10/05' group by o.id, o.customer_id, c.customer_name, o.status, o.date, oi.order_id order by oi.order_id 

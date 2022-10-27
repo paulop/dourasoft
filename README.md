@@ -19,7 +19,10 @@ Banco de Dados: ElephantSQL (Posgres) em nuvem:
 		
 		dbase-v0.5.sql 
 		dbase-v0.6.sql
-		dbase-v0.7.sql 
+		dbase-v0.7.sql
+		dbase-v0.8.sql 
+		dbase-v0.9.sql
+		dbase-v1.0.sql  
 
 
 ## Manual de instalação e inicialização para Ubuntu 22.04 lts:
@@ -38,13 +41,9 @@ Banco de Dados: ElephantSQL (Posgres) em nuvem:
 
 4 - Clonar o repositório do github em uma pasta (exemplo: "user@host:~$"):
 
-	user@host:~$ git clone "endereco_http"
+	user@host:~$ git clone "endereco_repo.git"
 
-5 - Entrar na pasta e **realizar o git checkout no branch "desafio-guivue"**
-
-	user@host:~$ cd dourasoft
-
-	user@host:~/dourasoft$ git checkout desafio-guivue
+5 - Entrar na pasta e **criar um branch local a partir do branch remoto "desafio-guivue"**
     
 6 - Entrar na pasta server e Instalar dependencias do Backend:
 
@@ -73,16 +72,18 @@ Banco de Dados: ElephantSQL (Posgres) em nuvem:
 
 - b - instalar o pgAdmin4 mostrado no roteiro deste [link](https://www.pgadmin.org/download/pgadmin-4-apt/) 
 
+- c - alternar os comentários do arquivo .env de maneira a seleciona a base de dados local. As criacoes de tabelas e inserções estão nos arquivos .sql dentro da pasta "server"
 
-10 - Inicializar o server em um terminal a partir da **pasta server** (recomendado vscode com 02 terminais em modo split): 
+
+10 - Inicializar o server em um terminal a partir da **pasta server** (recomendado VsCode com 02 terminais em modo split): 
 
 	user@host:~/dourasoft/server$ nodemon
 
 11 - Inicializar o client em outro terminal a partir da **pasta client**: 
 
-	user@host:~/dourasoft/client$ npm start
+	user@host:~/dourasoft/client$ quasar dev
 
-12 - Uma instância do navegador deverá abrir o Frontend na URL http://localhost:9000 com o projeto
+12 - Uma instância do navegador deverá abrir o Frontend na URL http://localhost:8080 com o projeto
 
 
 

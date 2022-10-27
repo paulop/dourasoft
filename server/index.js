@@ -356,3 +356,26 @@ app.delete("/orders/api/v1/ordet/:id", async (req,res) => {
     }
 
 });
+
+
+// Monthly Sales Query
+
+// read order_detail registers
+
+// create-insert order item register (after search)
+
+app.post("/orders/api/v1/sales", async (req,res) => {
+    try {
+        const year = req.body;
+        console.log(year.yearchoice)
+        const results = await pool.query(
+            "select EXTRACT(MONTH from orders.date) as Mes, sum(order_items.quantity*products.price) as Total from orders, order_items, products where orders.id = order_items.order_id AND EXTRACT(YEAR from orders.date) = $1 group by Mes Order by Mes", [ year.yearchoice ]
+        );
+        console.log(results.rows);
+        res.send(results.rows)
+    }
+    catch (err) {
+        console.error(err.message);
+    }
+
+});

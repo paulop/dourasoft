@@ -11,6 +11,7 @@
    
        import OrdInput from 'src/components/OrdInput.vue'
        import OrdTab from 'src/components/OrdTab.vue'
+       import InfoChart from 'src/components/InfoChart.vue'
      
      
    export default defineComponent({
@@ -19,7 +20,9 @@
        
        components: {
        OrdInput,
-       OrdTab
+       OrdTab,
+       InfoChart
+
      }, 
    
    })

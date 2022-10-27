@@ -1,19 +1,47 @@
 <template>
     
-    <div class="q-pa-md">
+    <div class="q-pa-lg">
         <q-table
-        title="Listagem de Pedidos"
         :rows="rows"
         :columns="columns"
         style="height:540px"
         row-key="name"
+        :rows-per-page-options="[10]"
         >   
-            
-            <template v-slot:top-right>
-                <q-td>
-                    <q-btn class="q-pa-sm" @click="custSearch=true" dense color="secondary" size='12px' label='Busca Cliente'/>
-                </q-td>
-            </template>     
+            <template #top>
+                <div class="row justify-around">
+                    <div class="col">
+                        <div class="q-pa-sm text-h6">Listagem Pedidos</div>
+                    </div>
+                    <div class="col">
+                        <q-btn class="q-mt-md q-pa-sm" @click="graphs=true" dense color="secondary" size='12px' label='Graficos'/>
+                    </div>
+                    <div class="col">
+                        <q-btn class="q-mt-md q-pa-sm" @click="custSearch=true" dense color="secondary" size='12px' label='Busca Cliente'/>
+                    </div>
+                    <div class="col">
+                        <div id="q-app" style="width:250px;height:20px">
+                            <q-input filled v-model="dateRange" :model-value="`${dateRange.from} - ${dateRange.to}`" hint="Escolha faixa data">
+                                <template v-slot:append>
+                                    <q-icon name="event" class="cursor-pointer">
+                                    <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                                        <q-date v-model="dateRange" range mask="YYYY-MM-DD">
+                                        <div class="row items-center justify-end">
+                                            <q-btn v-close-popup label="Close" @click="captureDR()" color="primary" flat />
+                                        </div>
+                                        </q-date>
+                                    </q-popup-proxy>
+                                    </q-icon>
+                                </template>
+                            </q-input>
+                        </div>
+
+                    </div>
+
+                </div>
+                
+            </template> 
+  
             
             <template v-slot:body-cell-detail="props">
                 <q-td :props="props">
@@ -36,23 +64,33 @@
             </template>
             
             <template #bottom-row>
-                <div id="q-app" style="width:250px;height:20px">
-                    <q-input filled v-model="dateRange" :model-value="`${dateRange.from} - ${dateRange.to}`" hint="Escolha faixa data">
-                        <template v-slot:append>
-                            <q-icon name="event" class="cursor-pointer">
-                            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                                <q-date v-model="dateRange" range mask="YYYY-MM-DD">
-                                <div class="row items-center justify-end">
-                                    <q-btn v-close-popup label="Close" @click="captureDR()" color="primary" flat />
-                                </div>
-                                </q-date>
-                            </q-popup-proxy>
-                            </q-icon>
-                        </template>
-                    </q-input>
-                </div>
+                
             </template>   
       </q-table>
+
+      <q-dialog v-model="graphs">
+            <q-card style="max-width: 950px;width:950px;height:600px">
+                <div class="row justify-between" style="height:80px">
+                <div class="q-pa-md text-h5">Faturamento Mensal</div>
+                <q-select class="q-pa-md  text-h6" style="width:280px;height:40px" outlined v-model="yearchoice" @update:model-value="manageSelect(yearchoice)" :options="options" label="Faturamentos Mensais" />
+                </div>
+                <q-separator />
+                <q-card-section>
+                    <div id="app">
+                        <GChart
+                            type="ColumnChart"
+                            :data="chartData"
+                            :options="chartOptions"
+                            style="height:400px"                  
+                            
+                        />
+                    </div>        
+                </q-card-section>
+            <q-separator />
+            <!-- <q-btn flat label="Confirmar"  color="primary" v-close-popup /> -->
+            <q-btn flat label="Fechar" color="primary" v-close-popup />
+            </q-card>
+        </q-dialog>
 
       <q-dialog v-model="custSearch">
         <q-card style="max-width: 650px;width:650px;height:700px">
@@ -83,7 +121,7 @@
         <div class="q-ma-md flex justify-evenly " style="height: 320px">
             
             <q-form
-                @submit="onSubmit(id, ci, dt, st )"
+                @submit="onSubmitCli(cnm, ph, addr)"
                 @reset="onReset"
                 class="q-gutter-xs"
             >
@@ -203,10 +241,14 @@
   import {ref, onMounted} from 'vue'
   import {api} from 'boot/axios'
   import {useRouter} from 'vue-router'
+  import { GChart } from "vue-google-charts"
 
 
 
   export default {
+    components: {
+        GChart
+    },
     methods: {
         openmodel(row){
             console.log("hi")
@@ -235,13 +277,69 @@
     const addr = ref(null)
 
     const sch = ref(null)
+    const graphs = ref(null)
+    const yearchoice = ref(null)
 
     const rows = ref([])
     const rows2 = ref([])
 
+    const chartData = ref([
+                            ["Mes", "Faturamento"],
+                            ["1", 0],
+                            ["2", 0],
+                            ["3", 0],
+                            ["4", 0],
+                            ["5", 0],
+                            ["6", 0]
+                        ])
+
     const dateRange = ref({from: '', to: ''})
 
     const dtr = ref({from: '2021-01-01', to: '2022-01-05'});
+
+    const manageSelect= async (yearchoice) => {
+        
+        const body = {yearchoice};
+        console.log(body)
+        const {data} = await api.post('http://localhost:3001/orders/api/v1/sales', body);
+        await console.log(data)
+
+        //Conversao de JSON array para o formato do GChart
+        let m = [
+            data.map(value => value.mes),
+            data.map(value => value.total)
+        ];
+        // Transpor a matriz
+        let transpose = (array) => {
+            return array.reduce((prev, next) => next.map((item, i) =>
+                (prev[i] || []).concat(next[i])
+            ), []);
+        }
+        let ano = [];
+        let init = ['Mês', 'Faturamento'];
+        let last = transpose(m);
+        for (let i=0;i<last.length;i++){
+            last[i][0] = String(last[i][0]);
+            last[i][1] = parseFloat(last[i][1]);
+        }
+        //console.log(last)
+
+
+        ano[0]=init;
+
+        for (let i=0;i<last.length;i++){
+            ano[i+1]=last[i]; 
+            //ano[i][0] = String(ano[i][0]);
+            //ano[0][i] = parseFloat(ano[0][i]).toFixed(2);
+        }
+        
+        chartData.value = ano;
+
+        console.log(ano) 
+
+        
+
+    }
 
     const captureDR = () => {
         
@@ -301,6 +399,7 @@
         }
     }
 
+    
    
     const columns = [
 
@@ -352,6 +451,29 @@
        
     })
 
+    const onSubmitCli = async (customer_name, phone, addr) => {
+            
+            try {
+                const body = {customer_name, phone, addr};
+
+                const {data} = await api.post('http://localhost:3001/customers/api/v1/cust', body)
+
+                console.log(data)
+
+                    $q.notify({
+                    color: 'green-4',
+                    textColor: 'white',
+                    icon: 'cloud_done',
+                    message: 'Registro Atualizado'
+                })
+              
+                
+            } catch (error) {
+                
+            }
+            
+    }
+
 
     const handleDelete = async (rows, id) => {
         
@@ -379,6 +501,8 @@
         custSearch: ref(false),
         dateRange,
         dtr,
+        yearchoice,
+        graphs,
 
         id,
         ci,
@@ -390,6 +514,8 @@
         cnm,
         ph,
         addr,
+
+
         handleDelete,
         fetchData,
         fetchDataFilter,
@@ -397,6 +523,29 @@
         submitSch,
         showNotif,
         captureDR,
+        manageSelect,
+        onSubmitCli,
+
+        model: ref(null),
+        options:[
+            '2022','2021','2020','2019','2018','2017',
+        ],
+
+
+        // Array will be automatically processed with visualization.arrayToDataTable function
+        chartData,
+
+
+        chartOptions: {
+            chart: {
+
+            },
+            title: {
+              text: 'Faturamento',
+              align: 'left',
+            },
+            
+        },
 
 
         onSubmit (id, customer_id, date, status) {
@@ -426,22 +575,14 @@
         },
 
         
+
+        
         onReset () {
             ci.value = null
             dt.value = null
             st.value = null
         }
-    }
-    /*
-    methods:{
-        openmodel(row){
-            console.log("hi")
-            this.selected_row = row;
-            this.alert=true;
-        }
-    }
-    */
-    
+    }   
     }
   }
 

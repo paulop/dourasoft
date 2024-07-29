@@ -6,9 +6,9 @@ $(document).ready(function () {
     $("#searchBtn").click(function () {
         const city_name = $("#cityInput").val();
         $.get(`${GEOURL}direct?q=${city_name}&limit=5&appid=${APIKEY}`, function (data) {
-            if (data.length > 0) {
-                let lat = parseFloat(data[0]["lat"]);
-                let lon = parseFloat(data[0]["lon"]);
+            if (data.length > 0) { 
+                let lat = parseFloat(data[0]["lat"]); // obtem latitude para API
+                let lon = parseFloat(data[0]["lon"]); // obtem longitude para API
                 getCurrentWeather(lat, lon);
                 getFiveDaysForecast(lat, lon);
             }

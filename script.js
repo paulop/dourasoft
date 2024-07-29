@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    const APIURL = "https://api.openweathermap.org/data/2.5/";
+    const APIURL = "http://api.openweathermap.org/data/2.5/";
     const APIKEY = "a670b69c5de9a9ecb93b521c7c536eaa";
     const GEOURL = "http://api.openweathermap.org/geo/1.0/";
 
